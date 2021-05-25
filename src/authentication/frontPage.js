@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Container } from '@material-ui/core';
 import FormPage from './formPage';
 import "./styles.css";
@@ -20,7 +20,7 @@ function FrontPage(props) {
 
   return (
     <div>
-      {mode === "" ? Component : <FormPage  formMode={mode} setFormMode={setMode} />}
+      {mode === "" ? Component : <FormPage setIsLoggedIn={props.setIsLoggedIn} formMode={mode} setFormMode={setMode} />}
     </div>
   )
 }

@@ -1,12 +1,10 @@
 
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import FrontPage from './authentication/frontPage';
+import HomePage from './home/homePage';
 
 
-function HomePage() {
-  return <p>HOME</p>
-}
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,8 +12,8 @@ function App() {
   return (
     <div>
       {isLoggedIn ?
-        <HomePage /> : 
-        <FrontPage isLoggedIn = {isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
+        <HomePage/> : 
+        <FrontPage setIsLoggedIn={setIsLoggedIn} />}
     </div>
   )
 
