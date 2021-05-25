@@ -17,10 +17,10 @@ function FrontPage(props) {
       <Button className="button" variant="contained" color="primary" name="button" onClick={(event) => btnClicked(event)} value="signUp" > Sign Up </Button>
     </Container>
   );
-
+  const state = { ...props.state,  formMode: mode, setFormMode: setMode }
   return (
     <div>
-      {mode === "" ? Component : <FormPage setIsLoggedIn={props.setIsLoggedIn} formMode={mode} setFormMode={setMode} />}
+      {mode === "" ? Component : <FormPage state = {state} />}
     </div>
   )
 }

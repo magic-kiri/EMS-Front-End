@@ -7,13 +7,18 @@ import HomePage from './home/homePage';
 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [teacherMode, setTeacherMode] = useState(true);
+  const state = {
+    teacherMode: teacherMode,
+    setIsLoggedIn: setIsLoggedIn,
+    setTeacherMode: setTeacherMode,
+  }
   return (
     <div>
       {isLoggedIn ?
-        <HomePage/> : 
-        <FrontPage setIsLoggedIn={setIsLoggedIn} />}
+        <HomePage state = {state}  /> : 
+        <FrontPage state = {state} />}
     </div>
   )
 

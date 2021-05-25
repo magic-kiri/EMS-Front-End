@@ -64,8 +64,10 @@ function validateForm(formMode, info, setInfo) {
 
 export default function FormPage(props) {
   const classes = useStyles();
-  let { formMode, setFormMode, setIsLoggedIn } = props;
+
+  let { formMode, setFormMode, setIsLoggedIn, setTeacherMode } = props.state;
   const [info, setInfo] = useState(initialInfo);
+  
   function handleChange(event) {
     const { name, value, type, checked } = event.currentTarget
     type === "checkbox" ? setInfo({ ...info, [name]: checked }) : setInfo({ ...info, [name]: value })
@@ -80,6 +82,7 @@ export default function FormPage(props) {
       else {
 
       }
+      setTeacherMode(info.teacherMode);
       setFormMode('');
       setIsLoggedIn(true);
     }
