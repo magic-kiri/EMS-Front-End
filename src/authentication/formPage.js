@@ -90,7 +90,7 @@ export default function FormPage(props) {
 
   return (
     <div>
-      <ArrowBackIcon onClick={(event) => setFormMode('')}></ArrowBackIcon>
+      <ArrowBackIcon margin={2} onClick={(event) => setFormMode('')}></ArrowBackIcon>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>

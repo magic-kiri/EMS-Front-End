@@ -2,7 +2,7 @@
 
 let upcomingExam = [  
     {
-        courseCode: 250,
+        courseCode: 'CSE 150',
         courseTeacher: `Mehedi Hasan Nahid`,
         courseTitle: `ProjectWork (II)`,
         date : `27 April 2021`,
@@ -10,7 +10,7 @@ let upcomingExam = [
         endTime: `2:30 PM`
     },
     {
-        courseCode: 250,
+        courseCode: 'CSE 151',
         courseTeacher: `Mehedi Hasan Nahid`,
         courseTitle: `ProjectWork (II)`,
         date : `27 April 2021`,
@@ -21,7 +21,7 @@ let upcomingExam = [
 
  let runningExam = [  
     {
-        courseCode: 250,
+        courseCode: 'CSE 250',
         courseTeacher: `Mehedi Hasan Nahid`,
         courseTitle: `ProjectWork (II)`,
         date : `27 April 2021`,
@@ -29,7 +29,7 @@ let upcomingExam = [
         endTime: `2:30 PM`
     },
     {
-        courseCode: 250,
+        courseCode: 'CSE 251',
         courseTeacher: `Mehedi Hasan Nahid`,
         courseTitle: `ProjectWork (II)`,
         date : `27 April 2021`,
@@ -40,7 +40,7 @@ let upcomingExam = [
 
  let finishedExam = [  
     {
-        courseCode: 250,
+        courseCode: 'CSE 350',
         courseTeacher: `Mehedi Hasan Nahid`,
         courseTitle: `ProjectWork (II)`,
         date : `27 April 2021`,
@@ -48,7 +48,7 @@ let upcomingExam = [
         endTime: `2:30 PM`
     },
     {
-        courseCode: 250,
+        courseCode: 'CSE 351',
         courseTeacher: `Mehedi Hasan Nahid`,
         courseTitle: `ProjectWork (II)`,
         date : `27 April 2021`,

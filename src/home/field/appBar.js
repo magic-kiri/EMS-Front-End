@@ -9,34 +9,27 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    menuButton: {
+    toolbar: {
         marginRight: theme.spacing(2),
+        justifyContent: 'flex-end',
+        display: 'flex',
     },
-
-    rightSide: {
-        marginRight: theme.spacing(3),
-    }
 }));
 
 export default function MyAppBar(props) {
     const classes = useStyles();
-    
-    const {teacherMode,setIsLoggedIn} = props.state;
-    let leftValue = "75%";
 
-    if(teacherMode)
-        leftValue = "65%";
-    
+    const { teacherMode, setIsLoggedIn } = props.state;
     
     return (
         <div className={classes.root}>
             <AppBar position="static">
-                <Toolbar >
-                    { teacherMode &&
-                        <Button color="inherit" style = {{left: leftValue}} className={classes.rightSide}> Create a New Viva</Button>}
-                    <Button color="inherit" style = {{left: leftValue}} className={classes.rightSide}>Home</Button>
-                    <Button color="inherit" style = {{left: leftValue}} className={classes.rightSide}> Profile</Button>
-                    <Button color="inherit" style = {{left: leftValue}} className={classes.rightSide} onClick={() => setIsLoggedIn(false)}>Log Out</Button>
+                <Toolbar className={classes.toolbar}>
+                    {teacherMode &&
+                        <Button color="inherit" > Create a New Viva</Button>}
+                    <Button color="inherit" >Home</Button>
+                    <Button color="inherit" > Profile</Button>
+                    <Button color="inherit" onClick={() => setIsLoggedIn(false)}>Log Out</Button>
                 </Toolbar>
             </AppBar>
         </div>
