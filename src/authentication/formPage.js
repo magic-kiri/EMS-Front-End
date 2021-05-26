@@ -74,6 +74,7 @@ export default function FormPage(props) {
   }
 
   function submitAction(event) {
+    console.log("AISEEE RANDOM");
     if (validateForm(formMode, info, setInfo)) {
       // FETCH DATA
       if (formMode === 'signIn') {
@@ -109,7 +110,7 @@ export default function FormPage(props) {
             </Grid>
             <Button
               // type="submit"
-              onClick={submitAction} fullWidth variant="contained" color="primary" className={classes.submit}>
+              onClick={(event)=>submitAction(event)} fullWidth variant="contained" color="primary" className={classes.submit}>
               {formMode === 'signIn' ? 'Log In' : 'Sign Up'}
             </Button>
             <Grid container justify="flex-end">

@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 300,
         margin: theme.spacing(2),
         padding: theme.spacing(1),
+        display: 'flex',
     },
     title: {
         // flex:'center',
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 14,
         fontFamily: 'Times'
     },
-    date:{
+    date: {
         fontSize: 14,
         fontFamily: 'Times',
         color: '#1780ad',
@@ -34,11 +35,16 @@ export default function Exam(props) {
 
     const { courseCode, courseTeacher, courseTitle, date, startTime, endTime } = props.data.exam;
     const { state } = props.data;
-    let textDate;
-    if (state === 'running') 
-        textDate = ( <Typography className={classes.date} >RUNNING</Typography> );
-    else 
-        textDate = ( <div>{`Date: ${date}`} </div> );
+    let textDate, btnText;
+    
+    if (state === 'running') { 
+        btnText = 'Enter'; 
+        textDate = (<Typography className={classes.date} >RUNNING</Typography>); 
+    }
+    else { 
+        btnText = 'Details';
+        textDate = (<div>{`Date: ${date}`} </div>); 
+    }
     return (
         <Card className={classes.root}>
             <CardContent>
@@ -53,9 +59,9 @@ export default function Exam(props) {
                 </Typography>
 
             </CardContent>
-            {/* <CardActions>
-                <Button size="small">Learn More</Button>
-            </CardActions> */}
+            <CardActions>
+                <Button color="primary" variant="contained" size="small">{btnText}</Button>
+            </CardActions>
         </Card>
     );
 }

@@ -1,10 +1,11 @@
 
 
-import { Container, Grid, Paper } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 import React, { useState } from 'react';
 import data from '../data'
 import { makeStyles } from '@material-ui/core/styles';
 import GridColumn from './column';
+import SectionTop from './sectionTop';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,22 +19,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Body() {
+export default function Body(props) {
   const [upcomingExam, setUpcomingExam] = useState(data.upcomingExam);
   const [runningExam, setrunningExam] = useState(data.runningExam);
   const [finishedExam, setFinishedExam] = useState(data.finishedExam);
   const classes = useStyles();
 
-  const style = {
-    backgroundColor: 'red',
-  }
   return (
-    <div className={classes.root} >
-      <Grid container item className={classes.container} spacing={2}>
-        <GridColumn data={{exams: upcomingExam, state: 'upcoming'}} />
-        <GridColumn data={{exams: runningExam, state: 'running'}} />
-        <GridColumn data={{exams: finishedExam, state: 'finished'}} />
-      </Grid>
+    <div>
+      <SectionTop state={props.state} />
+      <div className={classes.root} >
+        <Grid container item className={classes.container} spacing={2}>
+          <GridColumn data={{ exams: upcomingExam, state: 'upcoming' }} />
+          <GridColumn data={{ exams: runningExam, state: 'running' }} />
+          <GridColumn data={{ exams: finishedExam, state: 'finished' }} />
+        </Grid>
+      </div>
     </div>
   )
 }

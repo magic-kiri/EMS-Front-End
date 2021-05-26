@@ -1,17 +1,31 @@
 
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import AppBar from './field/appBar';
-import Body from './field/body';
-import SectionTop from './field/sectionTop';
+import Home from './field/body';
 import './style.css'
 
 export default function HomePage(props) {
-    const state = {...props.state};
+    const [page, setPage] = useState('home');
+    const state = {
+        ...props.state,
+        page: page,
+        setPage: setPage
+    };
+    let body;
+    
+    if(page==='home')
+    {
+        body = <Home state={state}/>;
+    }
+    else if(page==='profile')
+    {
+
+    }
+
     return (
         <div>
-            <AppBar  state = {state}/>
-            <SectionTop state = {state}/>
-            <Body/>
+            <AppBar state={state} />
+            {body}
         </div>
     )
 }
