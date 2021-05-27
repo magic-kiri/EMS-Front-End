@@ -16,7 +16,7 @@ import Email from './field/email';
 import Password from './field/password';
 import TeacherMode from './field/teacherMode';
 import Copyright from './field/copyright';
-
+import postData from '../methods'
 
 
 const initialInfo = {
@@ -61,20 +61,23 @@ function validateForm(formMode, info, setInfo) {
 
 
 
-
 export default function FormPage(props) {
   const classes = useStyles();
 
   let { formMode, setFormMode, setIsLoggedIn, setTeacherMode } = props.state;
   const [info, setInfo] = useState(initialInfo);
-  
+
   function handleChange(event) {
     const { name, value, type, checked } = event.currentTarget
     type === "checkbox" ? setInfo({ ...info, [name]: checked }) : setInfo({ ...info, [name]: value })
   }
 
-  function submitAction(event) {
-    console.log("AISEEE RANDOM");
+  function logIn() {
+    setTeacherMode(info.teacherMode);
+    setFormMode('');
+    setIsLoggedIn(true);
+  }
+  async function submitAction(event) {
     if (validateForm(formMode, info, setInfo)) {
       // FETCH DATA
       if (formMode === 'signIn') {
@@ -82,10 +85,13 @@ export default function FormPage(props) {
       }
       else {
 
+        const res = await postData('/signUp', info);
+        if (res.statusCode === 200)
+          logIn();
+        else {
+
+        }
       }
-      setTeacherMode(info.teacherMode);
-      setFormMode('');
-      setIsLoggedIn(true);
     }
   }
 
@@ -97,7 +103,7 @@ export default function FormPage(props) {
         <div className={classes.paper}>
           <Avatar className={classes.avatar}><LockOutlinedIcon /></Avatar>
           <Typography component="h1" variant="h5">{formMode === 'signIn' ? 'Log In' : 'Sign Up'}</Typography>
-          
+
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
 
@@ -110,7 +116,7 @@ export default function FormPage(props) {
             </Grid>
             <Button
               // type="submit"
-              onClick={(event)=>submitAction(event)} fullWidth variant="contained" color="primary" className={classes.submit}>
+              onClick={(event) => submitAction(event)} fullWidth variant="contained" color="primary" className={classes.submit}>
               {formMode === 'signIn' ? 'Log In' : 'Sign Up'}
             </Button>
             <Grid container justify="flex-end">
@@ -122,7 +128,7 @@ export default function FormPage(props) {
             </Grid>
           </form>
         </div>
-        <Copyright/>
+        <Copyright />
       </Container>
     </div>
   );
