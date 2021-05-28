@@ -15,7 +15,7 @@ function App() {
     setTeacherMode: setTeacherMode,
   }
   return (
-    <div>
+    <div >
       {isLoggedIn ?
         <HomePage state = {state}  /> : 
         <FrontPage state = {state} />}

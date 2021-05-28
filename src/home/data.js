@@ -8,6 +8,7 @@ let upcomingExam = [
         date : `27 April 2021`,
         startTime: `12:30 PM`,
         endTime: `2:30 PM`
+        
     },
     {
         courseCode: 'CSE 151',
