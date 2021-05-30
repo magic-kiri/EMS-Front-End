@@ -13,9 +13,9 @@ export async function postData(url, packet) {
     }
 }
 
-export async function getData(url) {
-    let res = await fetch('http://localhost:4000' + url);
-    return { statusCode: res.status, body: await res.json() };
-}
+// export async function getData(url) {
+//     let res = await fetch('http://localhost:4000' + url);
+//     return { statusCode: res.status, body: await res.json() };
+// }
 
-export default  {postData,getData}
+export default  {postData}

@@ -1,9 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import Typography from '@material-ui/core/Typography';
+import CreateVivaComponent from './fieldViva/createVivaComponent';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,27 +36,14 @@ const useStyles = makeStyles((theme) => ({
 export default function ExamModal(props) {
     const classes = useStyles();
     const { open, setOpen } = props.state;
+    console.log(props.state);
     return (
         <div>
             <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
                 className={classes.modal}
                 open={open}
-                onClose={() => setOpen(false)}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 900,
-                }}
-            >
-                <Fade in={open}>
-                    <div className={classes.paper}>
-                        <Typography className={classes.title}> {'Create New Viva'} <br/> </Typography>
-                        <br/>
-                        {/* <Typography> Create New Viva </Typography> */}
-                    </div>
-                </Fade>
+                onClose={() => setOpen(false)}>
+                <CreateVivaComponent state={props.state}/>
             </Modal>
         </div>
     );

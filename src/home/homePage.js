@@ -1,10 +1,10 @@
 
-import React, { useState,useEffect } from 'react';
+import React, { useState} from 'react';
 import AppBar from './appBar';
 import Home from './fieldHome/body';
 import Profile from './profile';
 import './style.css'
-import ExamModal from './createExam';
+import CreateViva from './createViva';
 
 export default function HomePage(props) {
     
@@ -31,7 +31,7 @@ export default function HomePage(props) {
     return (
         <div>
             <AppBar state={state} />
-            <ExamModal state={state}/>
+            <CreateViva state={state}/>
             {body}
         </div>
     )
