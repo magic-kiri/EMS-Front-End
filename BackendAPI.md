@@ -26,3 +26,11 @@
     {
         details: [{roll: 2017331063, time: '02: 10PM' } , {roll: 2017331064, time: '02: 20PM' } , {roll: 2017331070, time: '02: 30PM'}  ]
     }
+
+5) Get(http://localhost:port/profileData):
+    {
+        firstName: First Name,
+        lastName: Last Name,
+        designation: Lecturer,
+        about: shobai khaishta...        
+    }
