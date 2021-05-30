@@ -1,6 +1,6 @@
 
 
-import { Grid, Paper } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import React, { useState } from 'react';
 import data from '../data'
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,9 +20,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Body(props) {
-  const [upcomingExam, setUpcomingExam] = useState(data.upcomingExam);
-  const [runningExam, setrunningExam] = useState(data.runningExam);
-  const [finishedExam, setFinishedExam] = useState(data.finishedExam);
+  const [upcomingExam] = useState(data.upcomingExam);
+  const [runningExam] = useState(data.runningExam);
+  const [finishedExam] = useState(data.finishedExam);
   const classes = useStyles();
 
   return (

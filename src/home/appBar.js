@@ -1,12 +1,10 @@
-
-
-import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 const useStyles = makeStyles((theme) => ({
     root: {
+        height: '10vh',
         flexGrow: 1,
     },
     toolbar: {
@@ -19,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 export default function MyAppBar(props) {
     const classes = useStyles();
     
-    const { teacherMode, setIsLoggedIn,setPage,page,setOpen} = props.state;
+    const { teacherMode, setIsLoggedIn,setPage,setOpen} = props.state;
 
     return (
         <div className={classes.root}>

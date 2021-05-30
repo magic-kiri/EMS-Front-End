@@ -84,6 +84,7 @@ export default function CreateVivaComponent(props) {
     function submitAction() {
         if (validateForm(vivaInfo, setVivaInfo)) {
             
+            setOpen(false);
         }
     }
 
@@ -102,9 +103,9 @@ export default function CreateVivaComponent(props) {
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField error={vivaInfo.duration === '' ? true : false}
-                                variant="outlined" name='duration' onChange={handleChange} value={vivaInfo.duration}
+                                variant="outlined" name='duration' onChange={handleChange}
                                 required fullWidth label='Viva Duration' autoFocus 
-                                value={vivaInfo.duration===null ? '' :vivaInfo.duration}
+                                value={vivaInfo.duration===null ? '' : vivaInfo.duration}
                                 />
                         </Grid>
                     </Grid>

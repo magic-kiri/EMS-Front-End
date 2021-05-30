@@ -25,7 +25,7 @@ export default function HomePage(props) {
     }
     else if(page==='profile')
     {
-        body = <Profile/>;
+        body = <Profile className ='body' state={state}/>;
     }
 
     return (

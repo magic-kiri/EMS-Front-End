@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 
 function DateComponent(props) {
    
-    const { name, vivaInfo, setVivaInfo } = props.state;
+    const { vivaInfo, setVivaInfo } = props.state;
     return (
 
         <KeyboardDatePicker
@@ -26,7 +26,7 @@ function DateComponent(props) {
 }
 
 function TimeComponent(props) {
-    const { name, vivaInfo, setVivaInfo } = props.state;
+    const { vivaInfo, setVivaInfo } = props.state;
     
     return (
 
