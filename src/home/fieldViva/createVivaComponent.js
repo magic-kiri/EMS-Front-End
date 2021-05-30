@@ -1,9 +1,10 @@
 
-import React, { useState} from 'react';
-import { Button, Typography } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Button, Typography, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import NameTitle from './pairTextField'
 import DatePicker from './datePicker';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -37,42 +38,83 @@ const useStyles = makeStyles((theme) => ({
 
 const initialVivaInfo = {
     courseCode: null,
-    courseTeacher: null,
     courseTitle: null,
+    startingRegNo: null,
+    endingRegNo: null,
     date: null,
     startTime: null,
-    endTime: null
+    duration: null,
 }
+
+
+
+function validateForm(vivaInfo, setVivaInfo) {
+    let tempInfo = {...vivaInfo};
+    let isOk = true;
+    for (const item in vivaInfo) {
+        if (tempInfo[item] === null || tempInfo === '') {
+            tempInfo[item] = '';
+            isOk = false;
+        }
+    }
+    setVivaInfo(tempInfo)
+    return isOk;
+}
+
 
 export default function CreateVivaComponent(props) {
 
     const classes = useStyles();
-    const [vivaInfo, setVivaInfo] = useState(initialVivaInfo) ;
-    const {open,setOpen} = props.state;
+    const [vivaInfo, setVivaInfo] = useState(initialVivaInfo);
+    const { setOpen } = props.state;
+
+    function handleChange(event) {
+        const { name, value } = event.currentTarget
+        setVivaInfo({ ...vivaInfo, [name]: value })
+    }
+
+
     const state = {
         vivaInfo: vivaInfo,
-        setVivaInfo:setVivaInfo,
+        setVivaInfo: setVivaInfo,
+        handleChange: handleChange,
     };
-    
+
+
+    function submitAction() {
+        if (validateForm(vivaInfo, setVivaInfo)) {
+            
+        }
+    }
+
     return (
         <div className={classes.root}>
             <div className={classes.title}>
                 <Typography className={classes.title}>Create New Viva</Typography>
             </div>
             <div>
+                <NameTitle state={{ ...state, name1: 'courseCode', name2: 'courseTitle' }} myLabel={{ label1: 'Course Code', label2: 'Title' }} />
                 <br />
-                <NameTitle state={state} myLabel={{label1: 'Course Code', label2: 'Title'}}/>
+                <NameTitle state={{ ...state, name1: 'startingRegNo', name2: 'endingRegNo' }} myLabel={{ label1: 'Starting Registration No.', label2: 'Ending Registration No.' }} />
+                <DatePicker state={{ ...state, name1: 'date', name2: 'startTime' }} />
                 <br />
-                <NameTitle state={state} myLabel={{label1: 'Starting Registration No.', label2: 'Ending Registration No.'}}/>
-                <br />
-                <DatePicker state={state}/>
-                <br />
+                <Grid item xs={12}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                            <TextField error={vivaInfo.duration === '' ? true : false}
+                                variant="outlined" name='duration' onChange={handleChange} value={vivaInfo.duration}
+                                required fullWidth label='Viva Duration' autoFocus 
+                                value={vivaInfo.duration===null ? '' :vivaInfo.duration}
+                                />
+                        </Grid>
+                    </Grid>
+                </Grid>
                 <br />
                 <br />
             </div>
             <div className={classes.buttonDiv}>
-                <Button color="primary" variant="contained" >Create Viva</Button>
-                <Button color="secondary" className={classes.cancelButton} variant="contained" >Cancel</Button>
+                <Button color="primary" variant="contained" onClick={() => submitAction()} >Create Viva</Button>
+                <Button color="secondary" onClick={() => setOpen(false)} className={classes.cancelButton} variant="contained" >Cancel</Button>
             </div>
         </div>
 

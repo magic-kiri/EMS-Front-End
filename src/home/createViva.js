@@ -36,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ExamModal(props) {
     const classes = useStyles();
     const { open, setOpen } = props.state;
-    console.log(props.state);
     return (
         <div>
             <Modal
