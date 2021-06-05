@@ -17,14 +17,14 @@ const useStyles = makeStyles((theme) => ({
 export default function MyAppBar(props) {
     const classes = useStyles();
     
-    const { teacherMode, setIsLoggedIn,setPage,setOpen} = props.state;
+    const { teacherMode, setIsLoggedIn,setPage,setVivaModal} = props.state;
 
     return (
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar className={classes.toolbar}>
                     {teacherMode &&
-                        <Button color="inherit" onClick={(event)=>setOpen(true)}> Create a New Viva</Button>}
+                        <Button color="inherit" onClick={(event)=>setVivaModal(true)}> Create a New Viva</Button>}
                     <Button color="inherit" onClick={(event)=>setPage('home')} >Home</Button>
                     <Button color="inherit" onClick={(event)=>setPage('profile')}> Profile</Button>
                     <Button color="inherit" onClick={(event)=> setIsLoggedIn(false)}>Log Out</Button>

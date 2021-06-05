@@ -8,14 +8,14 @@ import CreateViva from './createViva';
 
 export default function HomePage(props) {
     
-    const [open, setOpen] = useState(false);
-    const [page, setPage] = useState('profile');
+    const [vivaModal, setVivaModal] = useState(false);
+    const [page, setPage] = useState('home');
     const state = {
         ...props.state,
         page: page,
         setPage: setPage,
-        open: open,
-        setOpen: setOpen,
+        vivaModal: vivaModal,
+        setVivaModal: setVivaModal,
     };
     let body;
     

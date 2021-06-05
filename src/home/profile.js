@@ -1,5 +1,7 @@
 import { Card, CardContent } from "@material-ui/core"
 import TeacherProfile from './fieldProfile/teacherProfile'
+import StudentProfile from "./fieldProfile/studentProfile";
+
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { getData } from "../methods";
@@ -26,11 +28,11 @@ export default function Profile(props) {
     const classes = useStyles();
     const [profileInfo, setProfileInfo] = useState(getData('/profileData'));
     let component;
-    if (props.teacherMode) {
+    if (props.state.teacherMode) {
         component = <TeacherProfile />
     }
     else {
-
+        component = <StudentProfile/>
     }
     return (
         <div className={classes.root}>

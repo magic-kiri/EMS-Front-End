@@ -10,38 +10,18 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    paper: {
-        display: 'flex',
-        // alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#d2faf5',
-        border: '0.5px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-        minWidth: 600,
-        minHeight: 500,
-    },
-    title: {
-        // flex:'center',
-        fontSize: 24,
-        fontWeight: 'bold',
-        fontFamily: 'Times'
-    },
-    text: {
-        fontSize: 14,
-        fontFamily: 'Times'
-    },
+    
 }));
 
 export default function ExamModal(props) {
     const classes = useStyles();
-    const { open, setOpen } = props.state;
+    const { vivaModal, setVivaModal } = props.state;
     return (
         <div>
             <Modal
                 className={classes.modal}
-                open={open}
-                onClose={() => setOpen(false)}>
+                open={vivaModal}
+                onClose={() => setVivaModal(false)}>
                 <CreateVivaComponent state={props.state}/>
             </Modal>
         </div>

@@ -81,7 +81,7 @@ export default function FormPage(props) {
     if (validateForm(formMode, info, setInfo)) {
       // FETCH DATA
       if (formMode === 'signIn') {
-
+        const res = await postData('/logIn', info);
       }
       else {
 
