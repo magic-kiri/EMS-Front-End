@@ -82,15 +82,18 @@ export default function FormPage(props) {
       // FETCH DATA
       if (formMode === 'signIn') {
         const res = await postData('/logIn', info);
+        console.log(res);
+        if (res.result) {
+          localStorage.setItem('token', res.details.token);
+          console.log(res.details)
+          logIn();
+        }
       }
       else {
-
         const res = await postData('/signUp', info);
-        if (res.statusCode === 200)
-          logIn();
-        else {
-
-        }
+        console.log(res);
+        if (res.result)
+          setFormMode('');
       }
     }
   }

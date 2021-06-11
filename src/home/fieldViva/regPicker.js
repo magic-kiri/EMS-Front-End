@@ -100,9 +100,9 @@ export default function RegPicker(props) {
 
     async function createViva(){
         const packet = {...vivaInfo,reglist : regList};
-        const res = await postData(`/exam/create`,packet)
-        if(res.statusCode===200)
-            setVivaModal(false);
+        // const res = await postData(`/exam/create`,packet)
+        // if(res.statusCode===200)
+        //     setVivaModal(false);
     }
 
 

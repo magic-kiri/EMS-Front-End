@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile(props) {
     const classes = useStyles();
-    const [profileInfo, setProfileInfo] = useState(getData('/profileData'));
+    // const [profileInfo, setProfileInfo] = useState(getData('/profileData'));
     let component;
     if (props.state.teacherMode) {
         component = <TeacherProfile />

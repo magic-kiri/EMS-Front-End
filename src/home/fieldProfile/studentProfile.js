@@ -3,9 +3,9 @@ import NameTitle from "../fieldViva/pairTextField"
 import React, { useState, useEffect } from 'react'
 
 async function fetchData(setProfileData) {
-    const profileData = await getData('/profileData');
-    // console.log(profileData.body);
-    setProfileData(profileData.body);
+    // const profileData = await getData('/profileData');
+    // // console.log(profileData.body);
+    // setProfileData(profileData.body);
 }
 
 
