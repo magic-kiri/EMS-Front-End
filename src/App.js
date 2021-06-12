@@ -7,7 +7,7 @@ import HomePage from './home/homePage';
 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [teacherMode, setTeacherMode] = useState(true);
   const state = {
     teacherMode: teacherMode,

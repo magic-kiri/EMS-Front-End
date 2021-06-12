@@ -31,7 +31,7 @@ const axios = require('axios');
 // }
 
 
-export default async function postData(url, packet) {
+async function postData(url, packet) {
     let res;
     try {
         res = await axios.post('http://localhost:4000' + url, packet )
@@ -45,9 +45,10 @@ export default async function postData(url, packet) {
 }
 
 
-// export  async function getData(url) {
-//     let res = axios.get(url);
-//     return { statusCode: res.status, body: await res.json() };
-// }
+async function getData(url) {
+    let res = axios.get(url);
+    return { statusCode: res.status, body: await res.json() };
+}
 
+export default postData;
 // export default  {postData,getData}

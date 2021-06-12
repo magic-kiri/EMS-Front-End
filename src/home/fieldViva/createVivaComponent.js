@@ -81,6 +81,7 @@ export default function CreateVivaComponent(props) {
     const state = {
         vivaInfo: vivaInfo,
         setVivaInfo: setVivaInfo,
+        setVivaInfo: setVivaInfo,
         handleChange: handleChange,
         step: step,
         setStep: setStep,
@@ -90,6 +91,7 @@ export default function CreateVivaComponent(props) {
 
     function submitAction() {
         if (validateForm(vivaInfo, setVivaInfo)) {
+           
             setStep(1);
             // console.log(vivaInfo);
             // setVivaModal(false);

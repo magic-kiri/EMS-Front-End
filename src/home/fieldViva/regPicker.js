@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useState,useEffect } from 'react';
-import { postData } from '../../methods';
+import postData from '../../methods';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function RegPicker(props) {
     const { setStep, vivaInfo,setVivaModal} = props.state;
-    let { startingRegNo, endingRegNo } = vivaInfo;
+    let { startingRegNo, endingRegNo, } = vivaInfo;
     
     startingRegNo = parseInt(startingRegNo);
     endingRegNo = parseInt(endingRegNo);
@@ -99,10 +99,19 @@ export default function RegPicker(props) {
     }
 
     async function createViva(){
-        const packet = {...vivaInfo,reglist : regList};
-        // const res = await postData(`/exam/create`,packet)
-        // if(res.statusCode===200)
-        //     setVivaModal(false);
+        let info = vivaInfo;
+        // console.log(info);
+        let date = info.date.getTime()-(info.date.getTime()%86400000)
+        date+=info.startTime%86400000;
+        info.startTime = new Date(date);
+        delete info.date;
+        const packet = {...info,reglist : regList};
+        // console.log(packet);
+        // const res = await postData 
+        const res = await postData(`/exam/create`,packet)
+        
+        if(res.statusCode===200)
+            setVivaModal(false);
     }
 
 
