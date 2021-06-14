@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useState,useEffect } from 'react';
-import postData from '../../methods';
+import postData from '../../methods/postMethod';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -97,20 +97,22 @@ export default function RegPicker(props) {
         reg.sort(function(a, b){return a - b});
         setRegList(reg);
     }
+    async function getName(){
+        const res = await postData('/profile/profileData',{email: localStorage.getItem('email')});
+        return res.body[0].firstName + ' ' + res.body[0].lastName;
+    }
 
     async function createViva(){
-        let info = vivaInfo;
-        // console.log(info);
+        let info = {...vivaInfo};
         let date = info.date.getTime()-(info.date.getTime()%86400000)
         date+=info.startTime%86400000;
         info.startTime = new Date(date);
         delete info.date;
-        const packet = {...info,reglist : regList};
-        // console.log(packet);
-        // const res = await postData 
-        const res = await postData(`/exam/create`,packet)
+        const packet = {...info,regList : regList};
         
-        if(res.statusCode===200)
+        packet.courseTeacher = await getName();
+        const res = await postData(`/exam/create`,packet)
+        if(res.status===200)
             setVivaModal(false);
     }
 

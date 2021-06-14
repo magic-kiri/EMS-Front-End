@@ -16,7 +16,9 @@ import Email from './field/email';
 import Password from './field/password';
 import TeacherMode from './field/teacherMode';
 import Copyright from './field/copyright';
-import postData from '../methods'
+import postData from '../methods/postMethod'
+import getData from '../methods/getMethod';
+import AlertDialog from '../alertBox';
 
 
 const initialInfo = {
@@ -63,6 +65,9 @@ function validateForm(formMode, info, setInfo) {
 
 export default function FormPage(props) {
   const classes = useStyles();
+  const [alertBox, setAlertBox] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('Nothing!');
+
 
   let { formMode, setFormMode, setIsLoggedIn, setTeacherMode } = props.state;
   const [info, setInfo] = useState(initialInfo);
@@ -72,7 +77,8 @@ export default function FormPage(props) {
     type === "checkbox" ? setInfo({ ...info, [name]: checked }) : setInfo({ ...info, [name]: value })
   }
 
-  function logIn() {
+  async function logIn() {
+    const userData = await postData('/profileData',)
     setTeacherMode(info.teacherMode);
     setFormMode('');
     setIsLoggedIn(true);
@@ -82,24 +88,36 @@ export default function FormPage(props) {
       // FETCH DATA
       if (formMode === 'signIn') {
         const res = await postData('/logIn', info);
-        console.log(res);
-        if (res.result) {
-          localStorage.setItem('token', res.details.token);
-          console.log(res.details)
-          logIn();
+        if (res.status===200) {
+          console.log(res.body);
+          localStorage.setItem('token', res.body.token);
+          localStorage.setItem('email', res.body.email);
+          localStorage.setItem('teacherMode',res.body.teacherMode);
+          setTeacherMode(res.body.teacherMode);
+          setFormMode('');
+          setIsLoggedIn(true);
+        }
+        else {
+          console.log(res);
+          setErrorMsg(res.body);
+          setAlertBox(true);
         }
       }
       else {
         const res = await postData('/signUp', info);
-        console.log(res);
-        if (res.result)
+        if (res.status === 200)
           setFormMode('');
+        else {
+          setErrorMsg(res.body);
+          setAlertBox(true);
+        }
       }
     }
   }
 
   return (
     <div>
+      <AlertDialog state={{ open: alertBox, setOpen: setAlertBox, description: errorMsg }} />
       <ArrowBackIcon margin={2} onClick={(event) => setFormMode('')}></ArrowBackIcon>
       <Container component="main" maxWidth="xs">
         <CssBaseline />

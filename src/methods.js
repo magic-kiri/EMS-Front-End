@@ -46,9 +46,11 @@ async function postData(url, packet) {
 
 
 async function getData(url) {
-    let res = axios.get(url);
-    return { statusCode: res.status, body: await res.json() };
+    console.log("ashiteseee!");
+    let res = axios.get('http://localhost:4000' + url);
+
+    return res.data;
 }
 
-export default postData;
-// export default  {postData,getData}
+// export default postData;
+export default  {postData,getData}

@@ -7,7 +7,7 @@ import Exam from './exam';
 
 export default function GridColumn(props) {
     const { exams,state } = props.data;
-    const component = exams.map((exam) => <Exam data={{exam: exam,state:state}}/>)
+    const component = exams.map((exam) => <Exam key={exam._id} data={{exam: exam,state:state}}/>)
     
     return (
         <Grid item>

@@ -44,7 +44,7 @@ const initialVivaInfo = {
     endingRegNo: null,
     date: null,
     startTime: null,
-    duration: null,
+    examDuration: null,
 }
 
 
@@ -91,10 +91,7 @@ export default function CreateVivaComponent(props) {
 
     function submitAction() {
         if (validateForm(vivaInfo, setVivaInfo)) {
-           
             setStep(1);
-            // console.log(vivaInfo);
-            // setVivaModal(false);
         }
     }
     const body = ( step===0  ? <div className={classes.root}>
@@ -111,9 +108,9 @@ export default function CreateVivaComponent(props) {
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField error={vivaInfo.duration === '' ? true : false}
-                            variant="outlined" name='duration' onChange={handleChange}
-                            required fullWidth label='Viva Duration' autoFocus
-                            value={vivaInfo.duration === null ? '' : vivaInfo.duration}
+                            variant="outlined" name='examDuration' onChange={handleChange}
+                            required fullWidth label='Viva Duration(in minute)' autoFocus
+                            value={vivaInfo.duration === null ? '' : vivaInfo.examDuration}
                         />
                     </Grid>
                 </Grid>

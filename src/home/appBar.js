@@ -18,7 +18,12 @@ export default function MyAppBar(props) {
     const classes = useStyles();
     
     const { teacherMode, setIsLoggedIn,setPage,setVivaModal} = props.state;
-
+    function logOut(){
+        localStorage.removeItem('token');
+        localStorage.removeItem('email');
+        localStorage.removeItem('teacherMode');
+        setIsLoggedIn(false);
+    }
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -27,7 +32,7 @@ export default function MyAppBar(props) {
                         <Button color="inherit" onClick={(event)=>setVivaModal(true)}> Create a New Viva</Button>}
                     <Button color="inherit" onClick={(event)=>setPage('home')} >Home</Button>
                     <Button color="inherit" onClick={(event)=>setPage('profile')}> Profile</Button>
-                    <Button color="inherit" onClick={(event)=> setIsLoggedIn(false)}>Log Out</Button>
+                    <Button color="inherit" onClick={(event)=> logOut()}>Log Out</Button>
                 </Toolbar>
             </AppBar>
         </div>
