@@ -4,6 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 const useStyles = makeStyles((theme) => ({
     root: {
+        display:"flex",
         height: '10vh',
         flexGrow: 1,
     },
@@ -11,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2),
         justifyContent: 'flex-end',
         display: 'flex',
-    },
+    }
 }));
 
 export default function MyAppBar(props) {
@@ -26,10 +27,10 @@ export default function MyAppBar(props) {
     }
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="fixed" className="fixed-top">
                 <Toolbar className={classes.toolbar}>
                     {teacherMode &&
-                        <Button color="inherit" onClick={(event)=>setVivaModal(true)}> Create a New Viva</Button>}
+                    <Button color="inherit" onClick={(event)=>setVivaModal(true)}> Create a New Viva</Button>}
                     <Button color="inherit" onClick={(event)=>setPage('home')} >Home</Button>
                     <Button color="inherit" onClick={(event)=>setPage('profile')}> Profile</Button>
                     <Button color="inherit" onClick={(event)=> logOut()}>Log Out</Button>

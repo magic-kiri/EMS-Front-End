@@ -30,7 +30,8 @@ export default function HomePage(props) {
 
     return (
         <div>
-            <AppBar state={state} />
+            <AppBar state={state}
+              width={0} />
             <CreateViva state={state}/>
             {body}
         </div>

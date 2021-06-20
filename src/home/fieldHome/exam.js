@@ -1,10 +1,12 @@
 import React from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,8 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Exam(props) {
     const classes = useStyles();
-
-    const { courseCode, courseTeacher, courseTitle, date, startTime, endTime } = props.data.exam;
+    const {_id, courseCode, courseTeacher, courseTitle, date, startTime, endTime } = props.data.exam;
     const { state } = props.data;
     let textDate, btnText;
     
@@ -45,6 +46,10 @@ export default function Exam(props) {
         btnText = 'Details';
         textDate = (<div>{`Date: ${date}`} </div>); 
     }
+
+    const link = "/"+btnText+"/"+_id;
+      
+    
     return (
         <Card className={classes.root}>
             <CardContent>
@@ -60,7 +65,7 @@ export default function Exam(props) {
 
             </CardContent>
             <CardActions>
-                <Button color="primary" variant="contained" size="small">{btnText}</Button>
+              <Link to ={link}>  <Button  color="primary" variant="contained" size="small">{btnText}</Button></Link>
             </CardActions>
         </Card>
     );
