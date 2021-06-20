@@ -89,7 +89,6 @@ export default function FormPage(props) {
       if (formMode === 'signIn') {
         const res = await postData('/logIn', info);
         if (res.status===200) {
-          console.log(res.body);
           localStorage.setItem('token', res.body.token);
           localStorage.setItem('email', res.body.email);
           localStorage.setItem('teacherMode',res.body.teacherMode);
@@ -98,7 +97,6 @@ export default function FormPage(props) {
           setIsLoggedIn(true);
         }
         else {
-          console.log(res);
           setErrorMsg(res.body);
           setAlertBox(true);
         }

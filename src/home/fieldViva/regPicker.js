@@ -69,8 +69,6 @@ export default function RegPicker(props) {
 
     const classes = useStyles();    
     useEffect( () => {
-        console.log(startingRegNo);
-        console.log(endingRegNo);
         let reg = [];
         for(let r=startingRegNo; r<=endingRegNo;r++)
             reg.push(r);
@@ -108,8 +106,8 @@ export default function RegPicker(props) {
         date+=info.startTime%86400000;
         info.startTime = new Date(date);
         delete info.date;
-        const packet = {...info,regList : regList};
-        
+        const packet = {...info, email: localStorage.getItem('email'), regList : regList};
+
         packet.courseTeacher = await getName();
         const res = await postData(`/exam/create`,packet)
         if(res.status===200)

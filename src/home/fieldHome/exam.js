@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
+import getData from '../../methods/getMethod';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -34,22 +35,66 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Exam(props) {
     const classes = useStyles();
-    const {_id, courseCode, courseTeacher, courseTitle, date, startTime, endTime } = props.data.exam;
-    const { state } = props.data;
-    let textDate, btnText;
+
+    const { courseCode, courseTeacher, courseTitle, date, startTime, endTime, _id, email } = props.data.exam;
+    const { state, setStudentModal, studentModal } = props.data;
     
-    if (state === 'running') { 
-        btnText = 'Enter'; 
-        textDate = (<Typography className={classes.date} >RUNNING</Typography>); 
+    let textDate, btnText;
+
+    if (state === 'running') {
+        btnText = 'Enter';
+        textDate = (<Typography className={classes.date} >RUNNING</Typography>);
     }
-    else { 
+    else {
         btnText = 'Details';
-        textDate = (<div>{`Date: ${date}`} </div>); 
+        textDate = (<div>{`Date: ${date}`} </div>);
     }
 
     const link = "/"+btnText+"/"+_id;
       
     
+    async function buttonClicked(event) {
+        const teacherMode = (localStorage.getItem('teacherMode') == 'true');
+        if (teacherMode == false) {
+            if (state === 'running') {
+                
+            }
+            else if (state == 'upcoming') {
+                const res = await getData(`/exam/details/${_id}`);
+                console.log('button pressed!!');
+                if (res.status === 200) {
+                    const schedule = res.body;
+                    let details = {
+                        open : true,
+                        header: 'Exam Schedule',
+                        body : res.body,
+                        valueType: 'Viva Schedule'
+                    }
+                    console.log(details);
+                    setStudentModal(details);
+                }
+                else
+                {
+                    console.log('not working!');
+                }
+            }
+            else {
+
+            }
+        }
+        else {
+            if (state === 'running') {
+
+            }
+            else if (state == 'upcoming') {
+
+            }
+            else {
+
+            }
+        }
+    }
+
     return (
         <Card className={classes.root}>
             <CardContent>
@@ -66,6 +111,7 @@ export default function Exam(props) {
             </CardContent>
             <CardActions>
               <Link to ={link}>  <Button  color="primary" variant="contained" size="small">{btnText}</Button></Link>
+                <Button color="primary" variant="contained" size="small" onClick={buttonClicked}>{btnText}</Button>
             </CardActions>
         </Card>
     );

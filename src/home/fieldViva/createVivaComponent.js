@@ -10,7 +10,7 @@ import RegPicker from './regPicker';
 const useStyles = makeStyles((theme) => ({
 
     root: {
-
+        // backgroundColor: 'red',
         backgroundColor: '#edfff8',
         border: '0.5px solid #000',
         boxShadow: theme.shadows[5],

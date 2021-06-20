@@ -20,16 +20,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Body(props) {
-  
-  const [exams,setExams] = useState({upComingExam:[], runningExam:[], endedExam:[]})
+
+  const [exams, setExams] = useState({ upComingExam: [], runningExam: [], endedExam: [] })
 
   useEffect(async function load() {
-    const res= await getData('/exam/currentExam');
-    if(res.status===200)
+    const res = await getData('/exam/currentExam');
+    if (res.status === 200)
       setExams(res.body);
+    // const intervalId = setInterval(async() => {
+        
+    //   console.log('refreshing');
+    //   const res = await getData('/exam/currentExam');
+    //   if (res.status === 200) {
+    //     console.log('reload');
+    //     setExams(res.body);
+    //   }
+    // }, 2000)
+    // return () => clearInterval(intervalId)
+    
+    // const refresh = setInterval(async () => {
+    // return clearInterval(refresh)
   }, []);
 
-  
+  const {} = props.state;
 
   const classes = useStyles();
 
@@ -38,9 +51,9 @@ export default function Body(props) {
       <SectionTop state={props.state} />
       <div className={classes.root} >
         <Grid container item className={classes.container} spacing={2}>
-          <GridColumn data={{ exams: exams.upComingExam, state: 'upcoming' }} />
-          <GridColumn data={{ exams: exams.runningExam, state: 'running' }} />
-          <GridColumn data={{ exams: exams.endedExam, state: 'finished' }} />
+          <GridColumn data={{ exams: exams.upComingExam, state: 'upcoming', ... props.state }} />
+          <GridColumn data={{ exams: exams.runningExam, state: 'running', ... props.state}} />
+          <GridColumn data={{ exams: exams.endedExam, state: 'finished', ... props.state }} />
         </Grid>
       </div>
     </div>
