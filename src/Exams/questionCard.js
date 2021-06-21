@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import postData1 from '../methods/postMethod';
-
+// import Button from '@material-ui/core/Button';
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
@@ -30,10 +30,11 @@ const useStyles = makeStyles({
   }
 
 });
+/// THIS COMPONENT IS RENDERING INFINITE TIME
 export default function QuestionCard(props) {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
-  console.log(props.teacherMode)
+  console.log('HOIIIII')
   const [text, setText] = React.useState([]);
   const teacherMode = props.teacherMode;
   useEffect(async () => {
@@ -47,7 +48,7 @@ export default function QuestionCard(props) {
   })
   return (
     <>
-    {text.map(element => (
+    {  text.map(element => (
         <Card className={classes.root}>
           <CardContent>
             <Typography className={classes.title} color="textPrimary" gutterBottom>

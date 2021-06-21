@@ -10,7 +10,7 @@ const Stopwatch = (props) => {
     React.useEffect(async () => {
         const url = "/exam/details/" + props.id.toString();
         const res = await getData(url)
-        console.log(res.body[0])
+        // console.log(res.body[0])
         const startTime = new Date(res.body[0].startTime).getTime();
         const endTime = new Date(res.body[0].endTime).getTime();
         console.log(startTime, endTime)

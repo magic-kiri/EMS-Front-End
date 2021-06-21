@@ -2,7 +2,7 @@
 
 
 const fetch = require('node-fetch');
-export default async function postData1(url, packet) {
+export default async function postData(url, packet) {
     try {
 
         const res = await fetch('http://localhost:4000' + url, {
