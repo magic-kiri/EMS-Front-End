@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center'
     },
     container: {
-        overflowY: 'scroll',
+        overflowY: 'auto',
         height: 330,
     },
     box: {

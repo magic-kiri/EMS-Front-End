@@ -1,101 +1,136 @@
 
 
+
+
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import { IconButton } from '@material-ui/core';
+import { IconButton, Typography, Button, Divider } from '@material-ui/core';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
+import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Stopwatch from '../../Stopwatch';
 import { useParams } from 'react-router-dom';
 import postData from '../../methods/postMethod';
 
-const drawerWidth = 310;
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        marginTop: "-5%",
-    },
-    drawer: {
 
-        width: drawerWidth,
-        flexShrink: 0,
+
+
+const useStyles = makeStyles((theme) => ({
+    top: {
+        height: '30%',
+        // backgroundColor: 'green',
     },
-    drawerPaper: {
-        marginTop: "4.6%",
-        width: drawerWidth,
+    root: {
+
+        height: '100%',
+        width: '100%'
     },
-    toolbar: theme.mixins.toolbar,
-    content: {
-        flexGrow: 1,
-        marginLeft: theme.spacing(40),
-        marginRight: theme.spacing(40),
-        marginTop: theme.spacing(-10),
-        marginBottom: theme.spacing(20),
-        padding: theme.spacing(3)
+    stopwatch:{
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: 15,
+        paddingBottom: 15,
+        fontSize: 24,
+        fontWeight: 'bold',
+        fontFamily: 'Times',
     },
-    divide: {
-        borderStyle: "dotted"
+    title: {
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: 12,
+        paddingBottom: 12,
+        fontSize: 19,
+        fontWeight: 'bold',
+        fontFamily: 'Times',
     },
-    button: {
-        margin: theme.spacing(2),
+    container: {
+        overflowY: 'scroll',
+        height: '62vh',
+    },
+    box: {
+        boxShadow: theme.shadows[2],
+        justifyContent: 'space-around',
+        display: 'flex',
+        width: 200,
+        paddingLeft: 15,
+        paddingRight: 15,
+    },
+    roll: {
+        paddingLeft: 13,
+        paddingTop: 13,
+        borderBottom: 2,
+        borderTop: 2,
+    },
+    outline: {
+        height: '70vh',
+        boxShadow: theme.shadows[3],
+    },
+    divider: {
+        
+    },
+    bank: {
+        overflowY: 'scroll',
+        // backgroundColor: 'red',
+        height: '62%',
+    },
+    question:{
+        fontFamily: 'Times',
+        fontSize: 15,
+        
     }
 }));
 
+
+const drawerWidth = 310;
 export default function LeftNavBar(props) {
     const classes = useStyles();
-    const { data,teacherMode } = props.state;
-    let { id } = useParams();
-    console.log(data);
-    const handleAdd = async (e) => {
-        const url = '/exam/addtoviva';
-        console.log(e);
-        const reqBody = {
+    
+    const bank = [
+        "This is a question no 1. what you think?? true or false ",
+        "This is a question no 1. what you think?? true or false ",
+        "This is a question no 1. what you think?? true or falseThis is a question no 1. what you think?? true or false",
+        "This is a question no 1. what you think?? true or false "]
 
-            question: e,
-            id: id
-        }
-        const res = await postData(url, reqBody);
-    }
+        return (
+            <div className={classes.root} >
+            <div className={classes.top}>
 
-    const handleDelete = (e) => {
-        console.log(e);
-    }
+                <div className={classes.stopwatch}>
+                    <Typography className={classes.stopwatch}> Stop Watch </Typography>
+                </div>
+                <Divider /><Divider /><Divider />
+                <div className={classes.title}>
+                    <Typography className={classes.title}> Question Bank </Typography>
+                </div>
+            </div>
+            {/* <Divider /><Divider /><Divider /> */}
+            <List className={classes.bank}>
+                {
+                    bank.map(question => (
 
-    return (
-        <div className={classes.root}>
-            {teacherMode &&
-                <Drawer
-                    className={classes.drawer}
-                    variant="permanent"
-                    classes={{ paper: classes.drawerPaper }}
-                    anchor="left">
-                    <div className={classes.toolbar} />
-                    <List>
-                        <Stopwatch id={id} />
-                        <ListItem ><h3>&nbsp; &nbsp; &nbsp;  Question Bank</h3></ListItem>
-                    </List>
-                    <List>
-                        {data.map(text => (
-                            <div>
-                                <Divider className={classes.divide} />
-                                <ListItem >
-                                    <ListItemText primary={text} />
-                                    <IconButton aria-label="add" value={text.question} onClick={() => handleAdd(text)}>
-                                        <AddCircleIcon color="primary" />
-                                    </IconButton>
-                                    <IconButton aria-label="delete" value={text.question} onClick={() => handleDelete(text)}>
-                                        <DeleteIcon color="secondary" />
-                                    </IconButton>
-                                </ListItem>
-                            </div>
-                        ))}
-                    </List>
-                </Drawer>
-            }
+                        <div>
+                            <Divider className={classes.divide} />
+                            <ListItem >
+                                <Typography className={classes.question}> {question} </Typography>
+                                <IconButton aria-label="add" value={question} onClick={() => { }}>
+                                    <ArrowForwardRoundedIcon color="primary" />
+                                </IconButton>
+                                <IconButton aria-label="delete" value={question} onClick={() => { }}>
+                                    <DeleteIcon color="secondary" />
+                                </IconButton>
+                            </ListItem>
+
+
+                        </div>
+                    ))
+                }
+            </List>
+
+
         </div>)
 }
