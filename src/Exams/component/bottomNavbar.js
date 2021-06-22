@@ -11,10 +11,11 @@ const useStyles = makeStyles((theme) => ({
 
     root: {
         backgroundColor: '#edfff8',
-        border: '0.5px solid #000',
-        boxShadow: theme.shadows[5],
+        // border: '0.1px solid #000',
+        boxShadow: theme.shadows[2],
         // flexGrow: 1,
-        // height: '100%',
+        height: '15vh',
+        // backgroundColor: 'red',
         // backgroundColor: 'green',
         // flexDirection: 'column-reverse',
     },
@@ -25,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         // height: '100%',
-        // backgroundColor: 'red',
         padding: theme.spacing(2, 4, 3),
         display: 'flex',
         justifyContent: 'center'
@@ -48,8 +48,6 @@ export default function BottomNavbar(props) {
                         required fullWidth label='Question' autoFocus
                         onChange={(event) => (event.currentTarget.value)}
                     />
-                    <Button variant="contained" color="primary" >Add</Button>
-                    <Button variant="contained" color="primary" >Add</Button>
                     <Button variant="contained" color="primary" >Add</Button>
                 </div>
             </div>

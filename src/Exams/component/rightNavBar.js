@@ -2,15 +2,9 @@
 
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
 import { IconButton, Typography, Button } from '@material-ui/core';
-import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Stopwatch from '../../Stopwatch';
 import { useParams } from 'react-router-dom';
 import postData from '../../methods/postMethod';
 
@@ -67,8 +61,8 @@ export default function RightNavBar(props) {
     const { waitingList} = props.state;
     let { id } = useParams();
     
-    function handleClicked(event){
-        // const res = await 
+    async function handleClicked(roll){
+        const res = await postData(`/exam/approveStudent`, { id:id, registrationNo: roll})
     }
 
     return (
@@ -84,7 +78,7 @@ export default function RightNavBar(props) {
                         {waitingList.map((roll) =>
                         (<div className={classes.box}>
                             <Typography className={classes.roll}>{roll}</Typography>
-                            <IconButton onClick={handleClicked}>
+                            <IconButton onClick={()=>handleClicked(roll)}>
                                <AddCircleIcon color="primary" />
                              </IconButton>
                             <br />

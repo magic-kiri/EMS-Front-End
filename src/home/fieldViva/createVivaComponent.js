@@ -107,10 +107,10 @@ export default function CreateVivaComponent(props) {
             <Grid item xs={12}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
-                        <TextField error={vivaInfo.duration === '' ? true : false}
+                        <TextField error={vivaInfo.examDuration === '' ? true : false}
                             variant="outlined" name='examDuration' onChange={handleChange}
                             required fullWidth label='Viva Duration(in minute)' autoFocus
-                            value={vivaInfo.duration === null ? '' : vivaInfo.examDuration}
+                            value={vivaInfo.examDuration === null ? '' : vivaInfo.examDuration}
                         />
                     </Grid>
                 </Grid>

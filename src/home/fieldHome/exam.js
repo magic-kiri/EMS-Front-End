@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import getData from '../../methods/getMethod';
+import postData from '../../methods/postMethod';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,7 +58,10 @@ export default function Exam(props) {
         const teacherMode = (localStorage.getItem('teacherMode') == 'true');
         if (teacherMode == false) {
             if (state === 'running') {
-                
+                console.log("JOIN KORTE CHAY");
+                console.log(localStorage.getItem('email'));
+                const res = await postData(`/exam/joinRequest`,{email: localStorage.getItem('email') , id : _id });
+                console.log(res);
             }
             else if (state == 'upcoming') {
                 const res = await getData(`/exam/details/${_id}`);
@@ -110,8 +114,8 @@ export default function Exam(props) {
 
             </CardContent>
             <CardActions>
-              <Link to ={link}>  <Button  color="primary" variant="contained" size="small">{btnText}</Button></Link>
-                <Button color="primary" variant="contained" size="small" onClick={buttonClicked}>{btnText}</Button>
+              <Link to ={link}>  <Button  color="primary" variant="contained" size="small" onClick={buttonClicked}>{btnText}</Button></Link>
+                {/* <Button color="primary" variant="contained" size="small" onClick={buttonClicked}>{btnText}</Button> */}
             </CardActions>
         </Card>
     );

@@ -10,6 +10,8 @@ body {
   text-align: center;
   margin: 15%; 
   position:relative;
+  justify-content: space-around;
+  display: flex;
 }
 
 .button{

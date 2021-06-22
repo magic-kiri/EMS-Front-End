@@ -5,15 +5,16 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import useStyles from './formStyle';
 
 import Name from './field/name';
 import Email from './field/email';
 import Password from './field/password';
+import RegistrationNo from './field/registrationNo';
 import TeacherMode from './field/teacherMode';
 import Copyright from './field/copyright';
 import postData from '../methods/postMethod'
@@ -27,11 +28,12 @@ const initialInfo = {
   email: null,
   password: null,
   teacherMode: false,
-  teacherPass: null
+  teacherPass: null,
+  registrationNo: null,
 }
 
 const signInMode = ['email', 'password'];
-const signUpMode = ['firstName', 'lastName', 'teacherMode', 'teacherPass'];
+const signUpMode = ['firstName', 'lastName', 'teacherMode', 'teacherPass','registrationNo'];
 
 
 function validateForm(formMode, info, setInfo) {
@@ -130,8 +132,8 @@ export default function FormPage(props) {
               <Email handleChange={handleChange} info={info} />
               <Password handleChange={handleChange} info={info} name='password' label='Password' />
               {formMode === 'signUp' && <TeacherMode info={info} handleChange={handleChange} />}
-              {info.teacherMode && <Password handleChange={handleChange} info={info} name='teacherPass' label="Teacher's Private Password" />}
-
+              {formMode === 'signUp' && info.teacherMode && <Password handleChange={handleChange} info={info} name='teacherPass' label="Teacher's Private Password" />}
+              {formMode === 'signUp' && !info.teacherMode && <RegistrationNo handleChange={handleChange} info={info} />}
             </Grid>
             <Button
               // type="submit"
