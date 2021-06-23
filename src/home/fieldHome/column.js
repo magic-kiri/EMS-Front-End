@@ -6,7 +6,6 @@ import {Grid } from '@material-ui/core';
 import Exam from './exam';
 
 export default function GridColumn(props) {
-    console.log(props.data);
     const { exams,state } = props.data;
     let details = {...props.data};
     delete details.exams;

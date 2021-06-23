@@ -2,7 +2,7 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import { IconButton, Typography, Button, Divider } from '@material-ui/core';
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
         height: '100%',
         width: '100%'
     },
-    stopwatch:{
+    stopwatch: {
         display: 'flex',
         justifyContent: 'center',
         paddingTop: 15,
@@ -49,55 +49,51 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: 'Times',
     },
     container: {
-        overflowY: 'scroll',
-        height: '62vh',
-    },
-    box: {
-        boxShadow: theme.shadows[2],
-        justifyContent: 'space-around',
-        display: 'flex',
-        width: 200,
-        paddingLeft: 15,
-        paddingRight: 15,
-    },
-    roll: {
-        paddingLeft: 13,
-        paddingTop: 13,
-        borderBottom: 2,
-        borderTop: 2,
+        // justifyContent: 'flex-start',
+        display: "flex"
     },
     outline: {
         height: '70vh',
         boxShadow: theme.shadows[3],
     },
-    divider: {
-        
-    },
+
     bank: {
         overflowY: 'scroll',
-        // backgroundColor: 'red',
         height: '62%',
     },
-    question:{
+    question: {
         fontFamily: 'Times',
         fontSize: 15,
-        
+        justifyContent: 'flex-start',
+        display: "flex"
+    },
+    icon: {
+        flexGrow:1 ,
+        justifyContent: 'flex-end',
+        display: "flex",
     }
+
+
 }));
 
 
 const drawerWidth = 310;
 export default function LeftNavBar(props) {
     const classes = useStyles();
-    
-    const bank = [
-        "This is a question no 1. what you think?? true or false ",
-        "This is a question no 1. what you think?? true or false ",
-        "This is a question no 1. what you think?? true or falseThis is a question no 1. what you think?? true or false",
-        "This is a question no 1. what you think?? true or false "]
+    const [bank, setBank] = useState([]);
 
-        return (
-            <div className={classes.root} >
+    useEffect(async () => {
+        const res = await postData(`/question/getBank`, { email: localStorage.getItem('email') });
+        console.log(res);
+        if (res.status === 200) {
+            console.log(res.body);
+            setBank(res.body);
+        }
+    }, []);
+
+
+    return (
+        <div className={classes.root} >
             <div className={classes.top}>
 
                 <div className={classes.stopwatch}>
@@ -112,21 +108,22 @@ export default function LeftNavBar(props) {
             <List className={classes.bank}>
                 {
                     bank.map(question => (
-
-                        <div>
+                        // <div >
+                        <ListItem className={classes.container}>
                             <Divider className={classes.divide} />
-                            <ListItem >
+                            <div className = {classes.question}>
                                 <Typography className={classes.question}> {question} </Typography>
-                                <IconButton aria-label="add" value={question} onClick={() => { }}>
+
+                            </div>
+                            <div className={classes.icon}>
+                                <IconButton  onClick={() => { }}>
                                     <ArrowForwardRoundedIcon color="primary" />
                                 </IconButton>
-                                <IconButton aria-label="delete" value={question} onClick={() => { }}>
+                                <IconButton  onClick={() => { }}>
                                     <DeleteIcon color="secondary" />
                                 </IconButton>
-                            </ListItem>
-
-
-                        </div>
+                            </div>
+                        </ListItem>
                     ))
                 }
             </List>

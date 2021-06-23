@@ -30,10 +30,12 @@ const useStyles = makeStyles({
         fontSize: 17,
     },
     comment:{
-        margin: "2%",
+        // backgroundColor: 'red',
+        // margin: "2%",
         fontSize: 12,
     },
     inp: {
+        // backgroundColor: 'green',
         minWidth: '85%'
     }
 
@@ -43,31 +45,29 @@ const useStyles = makeStyles({
 export default function Questions(props) {
     const classes = useStyles();
     const [detail, setDetail] = useState(null);
-    const bank = [
-        "This is a question no 1. what you think?? true or false ",
-        "This is a question no 1. what you think?? true or false ",
-        "This is a question no 1. what you think?? true or falseThis is a question no 1. what you think?? true or false",
-        "This is a question no 1. what you think?? true or false "]
-
+    const [questions,setQuestions] = useState ([]);
     const { id ,teacherMode} = props.state
     useEffect(async () => {
         const res = await postData(`/viva/getVivaHistory`, { id: id })
         if (res.status === 200)
-            setDetail(res.body);
+        {
+            setQuestions(res.body.questions);
+        }
     }, [])
 
     return (
         <div className = {classes.root}>
             {
-                detail && detail.question &&
-                detail.questions.map(element => (
+                questions.map(element => (
                     <Card className={classes.parent}>
-                        <CardContent>
+                        <CardContent >
                             <Typography className={classes.question} color="textPrimary" gutterBottom>{element.question}</Typography>
                             <Divider /><Divider />
-                            {teacherMode &&<Typography className={classes.comment} color="textPrimary" gutterBottom>{element.comment}</Typography>}
+                            {element.comments.map(reply => 
+                                <Typography className={classes.comment} color="textPrimary" gutterBottom>{reply.comment}</Typography>
+                            )}
                         </CardContent>
-                        {teacherMode &&
+                        {
                             <CardActions>
                                 <TextField id="standard-basic" label="Write a comment. . ." className={classes.inp} />
                                 <Button color="primary" size="small">Comment</Button>
