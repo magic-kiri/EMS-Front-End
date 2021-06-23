@@ -1,8 +1,8 @@
-
+import { useParams } from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
-
+import React, { useState,useEffect } from 'react';
+import postData from '../../methods/postMethod';
 
 
 
@@ -37,18 +37,30 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function BottomNavbar(props) {
+    let { id } = useParams();
     const classes = useStyles();
+    const [question,setQuestion] =  useState('');
+    async function askQuestion()
+    {
+        console.log("pressed ask")
+        const res = await postData(`/viva/postQuestion`,{question: question,id: id});
+        console.log(res);
+        if(res.status===200)
+            setQuestion('');
+        const response = await postData('/question/addQuestion',{question: question, email: localStorage.getItem('email') });
+        console.log(response);
 
+    }
     return (
         <div className={classes.root}>
             <div className={classes.packet}>
 
                 <div className={classes.button}>
                     <TextField
-                        required fullWidth label='Question' autoFocus
-                        onChange={(event) => (event.currentTarget.value)}
+                        required fullWidth label='Question' autoFocus value={question}
+                        onChange = {(event)=>{setQuestion(event.currentTarget.value)}}
                     />
-                    <Button variant="contained" color="primary" >Add</Button>
+                    <Button variant="contained" color="primary" onClick = {askQuestion} >Ask</Button>
                 </div>
             </div>
 

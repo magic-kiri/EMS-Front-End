@@ -65,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const drawerWidth = 310;
 export default function RightNavBar(props) {
     const [waitingList, setWaitingList] = useState([]);
     const [currentReg, setCurrentReg] = useState('None');
