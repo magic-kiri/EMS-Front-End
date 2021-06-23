@@ -7,12 +7,12 @@ import TeacherView from './teacherView';
 import StudentView from './studentView'
 
 function EnterExam(props) {
-    
+
     const [vivaModal, setVivaModal] = useState(false);
     const [page, setPage] = useState('home');
     const userEmail = localStorage.getItem('email');
     const { teacherMode, setIsLoggedIn, } = props.state;
-    
+
     const state = {
         ...props.state,
         page: page,
@@ -26,10 +26,13 @@ function EnterExam(props) {
         body = <Profile className='body' state={state} />;
     }
     let viewComponent;
-    if(teacherMode)
-        viewComponent = <TeacherView state={props.state}/>
-    else 
-        viewComponent = <StudentView state={props.state}/>
+    
+    if (teacherMode)
+        viewComponent = <TeacherView state={props.state} />
+    else
+        viewComponent = <StudentView state={props.state} />
+
+
 
     return (
         <div>

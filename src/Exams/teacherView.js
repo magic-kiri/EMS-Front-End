@@ -46,9 +46,9 @@ export default function TeacherView(props) {
 
     let { id } = useParams();
     const { teacherMode } = props.state;
+    const [questions, setQuestions] = useState([]);
 
-
-    
+    const [render,setRender] = useState(0);
 
     const classes = useStyles();
 
@@ -58,17 +58,17 @@ export default function TeacherView(props) {
             {
                 teacherMode &&
                 <div className={classes.leftBar}>
-                    <LeftNavBar />
+                    <LeftNavBar state={{render:render,setRender:setRender}}/>
                 </div>
             }
             <div className={classes.mid}>
-                <Questions state={{ id: id, teacherMode: teacherMode }} />
-                <BottomNavbar />
+                <Questions state={{ id: id, questions: questions,setQuestions: setQuestions,render:render,setRender:setRender }} />
+                <BottomNavbar state={{render:render,setRender:setRender}}/>
             </div>
             {
                 teacherMode &&
                 <div className={classes.rightBar}>
-                    <RightNavBar />
+                    <RightNavBar state={{setQuestions:setQuestions,render:render,setRender:setRender}}/>
                 </div>
             }
         </div>

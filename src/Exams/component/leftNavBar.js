@@ -4,16 +4,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
+
 import { IconButton, Typography, Button, Divider } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import CheckRoundedIcon from '@material-ui/icons/CheckRounded';
+
 import ArrowForwardRoundedIcon from '@material-ui/icons/ArrowForwardRounded';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Stopwatch from '../../Stopwatch';
+
 import { useParams } from 'react-router-dom';
 import postData from '../../methods/postMethod';
 
@@ -68,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex"
     },
     icon: {
-        flexGrow:1 ,
+        flexGrow: 1,
         justifyContent: 'flex-end',
         display: "flex",
     }
@@ -77,20 +75,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const drawerWidth = 310;
+
 export default function LeftNavBar(props) {
     const classes = useStyles();
     const [bank, setBank] = useState([]);
 
-    useEffect(async () => {
+    const { render, setRender } = props.state;
+    useEffect(() => {
+        loadBank();
+    }, [render]);
+    let { id } = useParams();
+    async function loadBank() {
         const res = await postData(`/question/getBank`, { email: localStorage.getItem('email') });
-        console.log(res);
         if (res.status === 200) {
-            console.log(res.body);
             setBank(res.body);
         }
-    }, []);
+    }
 
+    useEffect(() => {
+        // const id = setInterval(loadBank,1000);
+        loadBank();
+        return () => {
+            clearInterval(id);
+        }
+    }, []);
 
     return (
         <div className={classes.root} >
@@ -111,15 +119,20 @@ export default function LeftNavBar(props) {
                         // <div >
                         <ListItem className={classes.container}>
                             <Divider className={classes.divide} />
-                            <div className = {classes.question}>
+                            <div className={classes.question}>
                                 <Typography className={classes.question}> {question} </Typography>
-
                             </div>
                             <div className={classes.icon}>
-                                <IconButton  onClick={() => { }}>
+                                <IconButton onClick={async () => {
+                                    await postData(`/viva/postQuestion`, { question: question, id: id });
+                                    setRender((render + 1) % 100000);
+                                }}>
                                     <ArrowForwardRoundedIcon color="primary" />
                                 </IconButton>
-                                <IconButton  onClick={() => { }}>
+                                <IconButton onClick={async () => {
+                                    await postData('/question/deleteQuestion', { question: question, email: localStorage.getItem('email') })
+                                    setRender((render + 1) % 100000);
+                                }}>
                                     <DeleteIcon color="secondary" />
                                 </IconButton>
                             </div>

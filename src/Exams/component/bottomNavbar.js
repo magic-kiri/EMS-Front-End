@@ -40,6 +40,7 @@ export default function BottomNavbar(props) {
     let { id } = useParams();
     const classes = useStyles();
     const [question,setQuestion] =  useState('');
+    const {render,setRender} = props.state;
     async function askQuestion()
     {
         console.log("pressed ask")
@@ -48,8 +49,7 @@ export default function BottomNavbar(props) {
         if(res.status===200)
             setQuestion('');
         const response = await postData('/question/addQuestion',{question: question, email: localStorage.getItem('email') });
-        console.log(response);
-
+        setRender((render+1)%100000); 
     }
     return (
         <div className={classes.root}>
@@ -60,7 +60,7 @@ export default function BottomNavbar(props) {
                         required fullWidth label='Question' autoFocus value={question}
                         onChange = {(event)=>{setQuestion(event.currentTarget.value)}}
                     />
-                    <Button variant="contained" color="primary" onClick = {askQuestion} >Ask</Button>
+                    <Button variant="contained" color="primary"  onClick = {askQuestion} >Ask</Button>
                 </div>
             </div>
 

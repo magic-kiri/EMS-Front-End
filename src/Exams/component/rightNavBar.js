@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import postData from '../../methods/postMethod';
 import getData from '../../methods/getMethod';
-
+import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -66,26 +66,49 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function RightNavBar(props) {
+    const {setQuestions} = props.state;
     const [waitingList, setWaitingList] = useState([]);
     const [currentReg, setCurrentReg] = useState('None');
     const classes = useStyles();
     let { id } = useParams();
-
-    useEffect(async () => {
+    
+    
+    async function loadData(){
         const res = await getData(`/viva/waitingList/${id}`);
         if (res.status === 200)
-            setWaitingList(res.body);
+        setWaitingList(res.body);
         const response = await postData('/exam/getCurrentReg',{id:id});
         if(response.status === 200)
-            setCurrentReg(response.body.currentReg);
+        setCurrentReg(response.body.currentReg);
+    }
+
+    const { render, setRender } = props.state;
+    useEffect(() => {
+        loadData();
+    }, [render]);
+    
+    useEffect(() => {
+        const id = setInterval(loadData,3000);
+        loadData();
+        return () => {
+            clearInterval(id);
+        }
     }, []);
 
     async function handleClicked(roll) {
         const res = await postData(`/exam/approveStudent`, { id: id, registrationNo: roll })
+        setRender((render + 1) % 100000);
     }
 
     async function removeStudent(){
         const res = await postData('/exam/removeStudent', {id:id});
+        setQuestions([]);
+        setRender((render + 1) % 100000);
+    }
+
+    async function rejectStudent(roll){
+        const res = await postData('/exam/rejectStudent', {id: id, registrationNo: roll});
+        setRender((render + 1) % 100000);
     }
 
     return (
@@ -108,6 +131,9 @@ export default function RightNavBar(props) {
                             <Typography className={classes.roll}>{roll}</Typography>
                             <IconButton onClick={() => handleClicked(roll)}>
                                 <AddCircleIcon color="primary" />
+                            </IconButton>
+                            <IconButton onClick={() => rejectStudent(roll)}>
+                                <CancelRoundedIcon color="secondary" />
                             </IconButton>
                             <br />
                         </div>))}
