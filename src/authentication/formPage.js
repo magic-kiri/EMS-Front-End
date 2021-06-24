@@ -52,6 +52,11 @@ function validateForm(formMode, info, setInfo) {
           tmpData[item] = '';
           result = false;
         }
+      } else if (item === 'registrationNo') {
+        if (!tmpData.teacherMode && (tmpData.registrationNo === null || tmpData.registrationNo === '')) {
+          tmpData[item] = '';
+          result = false;
+        }
       }
       else if ((tmpData[item] === null || tmpData[item] === '')) {
         tmpData[item] = '';
@@ -86,6 +91,8 @@ export default function FormPage(props) {
     setIsLoggedIn(true);
   }
   async function submitAction(event) {
+
+    console.log('hi', formMode, info);
     if (validateForm(formMode, info, setInfo)) {
       // FETCH DATA
       if (formMode === 'signIn') {
