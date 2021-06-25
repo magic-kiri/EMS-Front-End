@@ -134,7 +134,7 @@ const LeftNavBar = ({ exam, viva, user, state, stopWatchTime, setStopWatchTime }
             <div className={classes.top}>
 
                 <div className={classes.stopwatch}>
-                    <Typography className={classes.stopwatch}> {formatTimeFromSeconds(stopWatchTime)} </Typography>
+                    <Typography className={classes.stopwatch}> {(exam.courseCode || '') + ' ' + (exam.courseTitle || '')} </Typography>
                 </div>
                 <Divider /><Divider /><Divider />
                 <div className={classes.title}>

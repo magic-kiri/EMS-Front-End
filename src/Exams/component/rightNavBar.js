@@ -91,6 +91,7 @@ const RightNavBar = (props) => {
     useEffect(async () => {
         if (currentReg !== 'None') {
             const viva = await getViva(id, currentReg);
+            console.log('-----viva', viva.body)
             dispatch(setCurrentViva(viva.body || {}));
         }
     }, [currentReg]);

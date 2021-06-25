@@ -32,6 +32,7 @@ const StyledButton = styled.div`
 `;
 
 const MyAppBar = ({ user, dispatch, teacherMode, state }) => {
+    console.log('appbar', user);
     const classes = useStyles();
     const { setVivaModal } = state;
     const [profileLink, setProfileLink] = useState('/profile');
