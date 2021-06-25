@@ -10,8 +10,10 @@ import { setTeacherMode, setUserAction } from './reducers/actions';
 import ExamDetails from './Exams/examDetails';
 import Profile from './home/profile';
 import QuestionBank from './QuestionBank/questionBank';
+import Loading from './common/Loading';
 const App = ({ user, dispatch }) => {
   const isLoggedIn = user.email;
+  const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     if (!user.email && localStorage.token) {
       try {
@@ -20,6 +22,7 @@ const App = ({ user, dispatch }) => {
         dispatch(setUserAction(userObj))
         dispatch(setTeacherMode(userObj.teacherMode))
       } catch (e) {}
+      setLoading(false);
     }
   }, [user.email, localStorage.token]);
   
@@ -38,6 +41,10 @@ const App = ({ user, dispatch }) => {
           component={EnterExam}
         />
         <Route
+          path='/details/ended/:id'
+          component={ExamDetails}
+        />
+        <Route
           path='/details/:id'
           component={ExamDetails}
         />
@@ -51,7 +58,7 @@ const App = ({ user, dispatch }) => {
         />
         <Route
           path='/'
-          component={HomePage}
+          component={isLoading ? Loading : HomePage}
         />
       </Switch>
     )
@@ -61,7 +68,7 @@ const App = ({ user, dispatch }) => {
     <Switch>
         <Route
           path='/'
-          component={FrontPage}
+          component={isLoading ? Loading : FrontPage}
         />
       </Switch>
   )

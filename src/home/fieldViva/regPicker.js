@@ -5,6 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { useState,useEffect } from 'react';
 import postData from '../../methods/postMethod';
 import { connect } from 'react-redux';
+import { onUpdateDashBoard } from '../../reducers/actions';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -112,6 +113,8 @@ function RegPicker(props) {
 
         packet.courseTeacher = await getName();
         const res = await postData(`/exam/create`,packet)
+        // eslint-disable-next-line no-restricted-globals
+        props.dispatch(onUpdateDashBoard({}))
         if(res.status===200)
             setVivaModal(false);
     }
@@ -160,4 +163,4 @@ const mapStateToProps = (state) => {
         viva: state.app.viva,
     }
 }
-export default connect(mapStateToProps, null)(RegPicker)
+export default connect(mapStateToProps, dispatch => ({ dispatch }))(RegPicker)

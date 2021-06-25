@@ -1,4 +1,4 @@
-import { SET_CURRENT_EXAM, SET_CURRENT_VIVA, SET_TEACHER_MODE, SET_USER } from './constants'
+import { SET_CURRENT_EXAM, SET_CURRENT_VIVA, SET_TEACHER_MODE, SET_USER, UPDATE_DASHBOARD } from './constants'
 
 export const setUserAction = (user) => ({
   type: SET_USER,
@@ -20,3 +20,9 @@ export const setCurrentViva = (viva) => ({
   viva,
 })
 
+export const onUpdateDashBoard = (updateDashBoard) => {
+  return {
+    type: UPDATE_DASHBOARD,
+    updateDashBoard,
+  }
+}

@@ -6,7 +6,7 @@ import _ from 'underscore';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import getData from '../methods/getMethod';
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { Center, Row } from '../utils/styles';
 import { CircularProgress } from '@material-ui/core';
 import Loading from '../common/Loading';
@@ -35,7 +35,7 @@ const Wrapper = styled.div`
     align-items: center;
 `;
 
-const Card = ({ isEnded, isRunningNow, value, reg }) => {
+const Card = ({ isEndDetails, isEnded, isRunningNow, value, reg }) => {
     let status = '';
     let cardColor = '';
     if (isRunningNow) {
@@ -45,7 +45,7 @@ const Card = ({ isEnded, isRunningNow, value, reg }) => {
         status = 'Ended';
         cardColor = '#efa5ff';
     } else {
-        status = 'Scheduled';
+        status = isEndDetails ? 'Absent' : 'Scheduled';
         cardColor = '#bfefca';
     }
     return (
@@ -64,6 +64,8 @@ function ExamDetails({ dispatch, teacherMode }) {
 
     const [vivaModal, setVivaModal] = useState(false);
     const { id } = useParams();
+    const { pathname } = useLocation();
+    const isEndDetails = pathname.includes('ended');
     const [ptList, setPtList] = useState([]);
     const [exam, setExam] = useState({});
     const [isLoading, setIsLoading] = useState(false);
@@ -109,7 +111,7 @@ function ExamDetails({ dispatch, teacherMode }) {
                     </StyledRow>
                     {isLoading && <Loading />}
                     {!isLoading && _.map(ptList, pt =>
-                        <Card key={Math.random()} {...pt} />
+                        <Card isEndDetails={isEndDetails} key={Math.random()} {...pt} />
                     )} 
                 </TableWrapper>
             </Center>
