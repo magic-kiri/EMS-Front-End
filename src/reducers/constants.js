@@ -1,0 +1,4 @@
+export const SET_USER = 'SET_USER'
+export const SET_TEACHER_MODE = 'SET_TEACHER_MODE'
+export const SET_CURRENT_EXAM = 'SET_CURRENT_EXAM'
+export const SET_CURRENT_VIVA = 'SET_CURRENT_VIVA'

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -6,6 +7,9 @@ import { useParams } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import { Typography, Button, Divider } from '@material-ui/core';
 import CardContent from '@material-ui/core/CardContent';
+import { connect } from 'react-redux';
+import { setCurrentViva } from '../reducers/actions';
+import { getViva } from '../utils/api';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,8 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function StudentView(props) {
-
+function StudentView({ dispatch, user }) {
     const classes = useStyles();
     const [permission, setPermission] = useState(false);
 
@@ -49,7 +52,10 @@ export default function StudentView(props) {
 
 
     const [questions, setQuestions] = useState([]);
-
+    useEffect(async () => {
+        const viva = await getViva(id, user.registrationNo);
+        dispatch(setCurrentViva(viva.body || {}));
+    }, [user]);
     async function loadQuestion() {
         const response = await postData(`/exam/verifyPermission`, { email: localStorage.getItem('email'), id: id })
         if (response.status === 200) {
@@ -118,3 +124,15 @@ export default function StudentView(props) {
         </div>
     )
 }
+
+
+const mapStateToProps = state => ({
+    user: state.app.user
+})
+  
+const mapDispatchToProps = dispatch => ({
+    dispatch
+})
+  
+export default connect(mapStateToProps, mapDispatchToProps)(StudentView);
+  

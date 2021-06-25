@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { connect } from 'react-redux'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,7 +20,9 @@ import TeacherMode from './field/teacherMode';
 import Copyright from './field/copyright';
 import postData from '../methods/postMethod'
 import getData from '../methods/getMethod';
+
 import AlertDialog from '../alertBox';
+import { setTeacherMode, setUserAction } from '../reducers/actions';
 
 
 const initialInfo = {
@@ -70,13 +73,11 @@ function validateForm(formMode, info, setInfo) {
 
 
 
-export default function FormPage(props) {
+const FormPage = ({ formMode, setFormMode, dispatch, teacherMode  }) => {
   const classes = useStyles();
   const [alertBox, setAlertBox] = useState(false);
   const [errorMsg, setErrorMsg] = useState('Nothing!');
 
-
-  let { formMode, setFormMode, setIsLoggedIn, setTeacherMode } = props.state;
   const [info, setInfo] = useState(initialInfo);
 
   function handleChange(event) {
@@ -84,12 +85,6 @@ export default function FormPage(props) {
     type === "checkbox" ? setInfo({ ...info, [name]: checked }) : setInfo({ ...info, [name]: value })
   }
 
-  async function logIn() {
-    const userData = await postData('/profileData',)
-    setTeacherMode(info.teacherMode);
-    setFormMode('');
-    setIsLoggedIn(true);
-  }
   async function submitAction(event) {
 
     console.log('hi', formMode, info);
@@ -101,9 +96,10 @@ export default function FormPage(props) {
           localStorage.setItem('token', res.body.token);
           localStorage.setItem('email', res.body.email);
           localStorage.setItem('teacherMode',res.body.teacherMode);
-          setTeacherMode(res.body.teacherMode);
+          dispatch(setUserAction(res.body));
+          console.log('here also', res.body);
+          dispatch(setTeacherMode(res.body.teacherMode));
           setFormMode('');
-          setIsLoggedIn(true);
         }
         else {
           setErrorMsg(res.body);
@@ -125,7 +121,7 @@ export default function FormPage(props) {
   return (
     <div>
       <AlertDialog state={{ open: alertBox, setOpen: setAlertBox, description: errorMsg }} />
-      <ArrowBackIcon margin={2} onClick={(event) => setFormMode('')}></ArrowBackIcon>
+      {/* <ArrowBackIcon margin={2} onClick={(event) => setFormMode('')}></ArrowBackIcon> */}
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
@@ -149,7 +145,7 @@ export default function FormPage(props) {
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link onClick={(event) => setFormMode(formMode === 'signIn' ? 'signUp' : 'signIn')} variant="body2">
+                <Link style={{ cursor: 'pointer' }} onClick={(event) => setFormMode(formMode === 'signIn' ? 'signUp' : 'signIn')} variant="body2">
                   {formMode === 'signIn' ? `Don't have an account? Sign Up` : 'Already have an account? Sign in'}
                 </Link>
               </Grid>
@@ -161,3 +157,12 @@ export default function FormPage(props) {
     </div>
   );
 }
+
+const mapStateToProps = state => ({})
+  
+const mapDispatchToProps = dispatch => ({
+    dispatch
+})
+  
+export default connect(mapStateToProps, mapDispatchToProps)(FormPage);
+  

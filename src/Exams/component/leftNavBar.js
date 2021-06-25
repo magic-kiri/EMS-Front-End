@@ -14,7 +14,18 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import { useParams } from 'react-router-dom';
 import postData from '../../methods/postMethod';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import { Center } from '../../utils/styles';
+import { FormatListNumbered } from '@material-ui/icons';
+import { formatTimeFromSeconds } from '../../utils/comon.functions';
+import styled from 'styled-components';
 
+
+const StyledListItem = styled(ListItem)`
+    box-shadow: 1px 1px 3px #bcbcbc;
+    margin-bottom: 10px;
+`;
 
 
 
@@ -76,21 +87,39 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function LeftNavBar(props) {
+const LeftNavBar = ({ exam, viva, user, state, stopWatchTime, setStopWatchTime }) => {
     const classes = useStyles();
     const [bank, setBank] = useState([]);
-
-    const { render, setRender } = props.state;
+    const [alive, setAlive] = useState(0);
+    const { render, setRender } = state;
     useEffect(() => {
         loadBank();
     }, [render]);
     let { id } = useParams();
     async function loadBank() {
         const res = await postData(`/question/getBank`, { email: localStorage.getItem('email') });
+        console.log('helo', res);
         if (res.status === 200) {
             setBank(res.body);
         }
     }
+
+    // useEffect(() => {
+    //     if (viva) {
+    //         const seconds = moment().diff(viva.startTime, 'seconds');
+    //         console.log('---viva', viva, seconds);
+    //         setStopWatchTime(seconds)
+    //     }
+    // }, [viva])
+
+    useEffect(() => {
+        setTimeout(() => {
+            // if (exam.currentReg && exam.currentReg !== 'None')
+            const seconds = moment().diff(viva.startTime, 'seconds');
+            setStopWatchTime(seconds)
+            setAlive(alive+1);
+        }, 1000)
+    }, [alive, viva.startTime])
 
     useEffect(() => {
         // const id = setInterval(loadBank,1000);
@@ -105,7 +134,7 @@ export default function LeftNavBar(props) {
             <div className={classes.top}>
 
                 <div className={classes.stopwatch}>
-                    <Typography className={classes.stopwatch}> Stop Watch </Typography>
+                    <Typography className={classes.stopwatch}> {(exam.courseCode || '') + ' ' + (exam.courseTitle || '')} </Typography>
                 </div>
                 <Divider /><Divider /><Divider />
                 <div className={classes.title}>
@@ -117,14 +146,19 @@ export default function LeftNavBar(props) {
                 {
                     bank.map(question => (
                         // <div >
-                        <ListItem className={classes.container}>
+                        <StyledListItem className={classes.container}>
                             <Divider className={classes.divide} />
                             <div className={classes.question}>
                                 <Typography className={classes.question}> {question} </Typography>
                             </div>
                             <div className={classes.icon}>
                                 <IconButton onClick={async () => {
-                                    await postData(`/viva/postQuestion`, { question: question, id: id });
+                                    await postData(`/viva/postQuestion`, {
+                                        question: question, 
+                                        authorEmail: user.email,
+                                        authorName: user.firstName + ' ' + user.lastName,
+                                        id: id
+                                    });
                                     setRender((render + 1) % 100000);
                                 }}>
                                     <ArrowForwardRoundedIcon color="primary" />
@@ -136,11 +170,19 @@ export default function LeftNavBar(props) {
                                     <DeleteIcon color="secondary" />
                                 </IconButton>
                             </div>
-                        </ListItem>
+                        </StyledListItem>
                     ))
                 }
             </List>
-
-
         </div>)
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.app.user,
+        exam: state.app.exam,
+        viva: state.app.viva,
+    }
+}
+export default connect(mapStateToProps, null)(LeftNavBar)

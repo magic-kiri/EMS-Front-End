@@ -1,48 +1,78 @@
-import { Switch, Route } from "react-router-dom";
 import './App.css';
+import jwt from 'jsonwebtoken';
 import React, { useState, useEffect } from 'react';
 import FrontPage from './authentication/frontPage';
 import HomePage from './home/homePage';
 import EnterExam from './Exams/enterExam';
-import { useParams } from "react-router";
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [teacherMode, setTeacherMode] = useState(true);
-  const { id } = useParams();
-  const state = {
-    teacherMode: teacherMode,
-    setIsLoggedIn: setIsLoggedIn,
-    setTeacherMode: setTeacherMode,
-  }
+import { Switch, Route } from "react-router";
+import { connect } from 'react-redux';
+import { setTeacherMode, setUserAction } from './reducers/actions';
+import ExamDetails from './Exams/examDetails';
+import Profile from './home/profile';
+import QuestionBank from './QuestionBank/questionBank';
+const App = ({ user, dispatch }) => {
+  const isLoggedIn = user.email;
   useEffect(() => {
-    if (localStorage.getItem('token') && localStorage.getItem('email')) {
-      setTeacherMode(localStorage.getItem('teacherMode') == 'true');
-      setIsLoggedIn(true);
+    if (!user.email && localStorage.token) {
+      try {
+        console.log('decoded', jwt.decode(localStorage.token))
+        const userObj = jwt.decode(localStorage.token);
+        dispatch(setUserAction(userObj))
+        dispatch(setTeacherMode(userObj.teacherMode))
+      } catch (e) {}
     }
-  }, [])
-  let body = <HomePage state={state} />
-  let body2 = <FrontPage state={state} />
+  }, [user.email, localStorage.token]);
+  
+  const [page, setPage] = useState(<div></div>);
+  // useEffect(() => {
+  //   const url = window.location.pathname;
+  //   if (url === '/') setPage(HomePage);
+  //   if (url.includes('enter')) setPage(EnterExam);
+  // }, [window.location.pathname])
   if (isLoggedIn) {
+    // return <Switch><Route path="*" component={page} /></Switch>;
     return (
       <Switch>
-               <Route
+        <Route
           path='/enter/:id'
-          component={() => <EnterExam state={state} />}
+          component={EnterExam}
+        />
+        <Route
+          path='/details/:id'
+          component={ExamDetails}
+        />
+        <Route
+          path='/profile/:id'
+          component={Profile}
+        />
+        <Route
+          path='/questionBank'
+          component={QuestionBank}
         />
         <Route
           path='/'
-          component={() => <HomePage state={state} />}
+          component={HomePage}
         />
       </Switch>
     )
   }
   else
   return (
-    <div >
-      <FrontPage state={state} />
-    </div>
+    <Switch>
+        <Route
+          path='/'
+          component={FrontPage}
+        />
+      </Switch>
   )
 
 }
-export default App;
+const mapStateToProps = state => ({
+  user: state.app.user,
+})
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps) (App);
 

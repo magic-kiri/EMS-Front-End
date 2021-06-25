@@ -6,11 +6,16 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import TextField from '@material-ui/core/TextField';
 import postData from '../../methods/postMethod';
+import styled from 'styled-components';
 
 import { Typography, Button, Divider } from '@material-ui/core';
 
 
-
+const StyledTextField = styled(TextField)`
+    .makeStyles-root-22 {
+        background-color: transparent;
+    }
+`;
 const useStyles = makeStyles((theme) => ({
     root: {
         // backgroundColor: 'green',
@@ -96,6 +101,7 @@ export default function Questions(props) {
                         <CardContent >
                             <Typography className={classes.question} color="textPrimary" gutterBottom>{element.question}</Typography>
                             <Divider /><Divider />
+                            <Typography className={classes.question} color="textPrimary" gutterBottom>Ask By {element.authorName}</Typography>
                             {
                                 element.comments.map(reply =>
                                     <Typography className={classes.comment} color="textPrimary" gutterBottom>{reply.comment}</Typography>)
@@ -103,7 +109,7 @@ export default function Questions(props) {
                         </CardContent>
                         {
                             <CardActions>
-                                <TextField id="standard-basic" label="Write a comment. . ." className={classes.inp} value={element.inputComment}
+                                <StyledTextField style={{ backgroundColor: 'white' }} id="standard-basic" label="Write a comment. . ." value={element.inputComment}
                                     onChange={(event) => {
                                         let newState = [...questions];
                                         newState[idx].inputComment = event.currentTarget.value;

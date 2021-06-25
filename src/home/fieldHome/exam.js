@@ -1,5 +1,5 @@
 import React from 'react';
-
+import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -34,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+const StyledLink = styled(Link)`
+    text-decoration: none;
+`;
+
 export default function Exam(props) {
     const classes = useStyles();
 
@@ -51,7 +55,7 @@ export default function Exam(props) {
         textDate = (<div>{`Date: ${date}`} </div>);
     }
 
-    const link = "/"+btnText+"/"+_id;
+    const link = "/"+btnText.toLocaleLowerCase()+"/"+_id;
       
     
     async function buttonClicked(event) {
@@ -100,8 +104,8 @@ export default function Exam(props) {
     }
 
     return (
-        <Card className={classes.root}>
-            <CardContent>
+        <Card className={classes.root} style={{ boxShadow: '2px 2px 5px #bcbcbc' }}>
+            <CardContent >
                 <Typography className={classes.title} gutterBottom>{courseCode + ': ' + courseTitle}</Typography>
                 <Typography className={classes.text}>
                     {'by ' + courseTeacher}
@@ -114,7 +118,8 @@ export default function Exam(props) {
 
             </CardContent>
             <CardActions>
-              <Link to ={link}>  <Button  color="primary" variant="contained" size="small" onClick={buttonClicked}>{btnText}</Button></Link>
+              <StyledLink to={link}>  <Button  color="primary" variant="contained" size="small" onClick={buttonClicked}>{btnText}</Button></StyledLink>
+              {state === 'running' && <StyledLink to={`/details/${_id}`}>  <Button  color="primary" variant="contained" size="small" onClick={buttonClicked}>Details</Button></StyledLink>}
                 {/* <Button color="primary" variant="contained" size="small" onClick={buttonClicked}>{btnText}</Button> */}
             </CardActions>
         </Card>

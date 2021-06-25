@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useState,useEffect } from 'react';
 import postData from '../../methods/postMethod';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -57,8 +58,9 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function RegPicker(props) {
+function RegPicker(props) {
     const { setStep, vivaInfo,setVivaModal} = props.state;
+    const { user } = props;
     let { startingRegNo, endingRegNo, } = vivaInfo;
     
     startingRegNo = parseInt(startingRegNo);
@@ -96,8 +98,8 @@ export default function RegPicker(props) {
         setRegList(reg);
     }
     async function getName(){
-        const res = await postData('/profile/profileData',{email: localStorage.getItem('email')});
-        return res.body[0].firstName + ' ' + res.body[0].lastName;
+        console.log(user);
+        return `${user.firstName} ${user.lastName}`
     }
 
     async function createViva(){
@@ -150,3 +152,12 @@ export default function RegPicker(props) {
         </div>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.app.user,
+        exam: state.app.exam,
+        viva: state.app.viva,
+    }
+}
+export default connect(mapStateToProps, null)(RegPicker)
