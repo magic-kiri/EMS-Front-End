@@ -3,9 +3,16 @@ import { Button, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useState,useEffect } from 'react';
 import postData from '../../methods/postMethod';
+import { connect } from 'react-redux';
 
 
+import styled from 'styled-components';
 
+const StyledTextField = styled(TextField)`
+    .makeStyles-root-22 {
+        background-color: transparent;
+    }
+`;
 
 const useStyles = makeStyles((theme) => ({
 
@@ -36,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function BottomNavbar(props) {
+const BottomNavbar = (props) => {
     let { id } = useParams();
     const classes = useStyles();
     const [question,setQuestion] =  useState('');
@@ -44,7 +51,12 @@ export default function BottomNavbar(props) {
     async function askQuestion()
     {
         console.log("pressed ask")
-        const res = await postData(`/viva/postQuestion`,{question: question,id: id});
+        const res = await postData(`/viva/postQuestion`,{
+            question: question,
+            authorName: props.user.firstName + ' ' + props.user.lastName,
+            authorEmail: props.user.email,
+            id: id
+        });
         console.log(res);
         if(res.status===200)
             setQuestion('');
@@ -52,11 +64,11 @@ export default function BottomNavbar(props) {
         setRender((render+1)%100000); 
     }
     return (
-        <div className={classes.root}>
+        <div style={{borderTop: '1px solid #ececec'}} className={classes.packet}>
             <div className={classes.packet}>
 
                 <div className={classes.button}>
-                    <TextField
+                    <StyledTextField
                         required fullWidth label='Question' autoFocus value={question}
                         onChange = {(event)=>{setQuestion(event.currentTarget.value)}}
                     />
@@ -68,3 +80,10 @@ export default function BottomNavbar(props) {
         </div>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.app.user,
+    }
+}
+export default connect(mapStateToProps, null)(BottomNavbar)

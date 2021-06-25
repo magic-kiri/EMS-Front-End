@@ -2,9 +2,11 @@ import { Card, CardContent } from "@material-ui/core"
 import TeacherProfile from './fieldProfile/teacherProfile'
 import StudentProfile from "./fieldProfile/studentProfile";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { getData } from "../methods";
+import { connect } from "react-redux";
+import { useParams } from "react-router";
+import getData from "../methods/getMethod";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,11 +26,19 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Profile(props) {
+function Profile(props) {
+    const { id } = useParams();
     const classes = useStyles();
-    // const [profileInfo, setProfileInfo] = useState(getData('/profileData'));
+    const [profileInfo, setProfileInfo] = useState({});
+    useEffect(() => {
+        getData(`/profile/getProfile/${id}`)
+            .then(data => {
+                console.log('profile ', data.body);
+            })
+        console.log('hii');
+    }, []);
     let component;
-    if (props.state.teacherMode) {
+    if (props.teacherMode) {
         component = <TeacherProfile />
     }
     else {
@@ -44,3 +54,15 @@ export default function Profile(props) {
         </div>
     )
 }
+
+const mapStateToProps = state => ({
+    user: state.app.user,
+    teacherMode: state.app.teacherMode,
+  })
+  const mapDispatchToProps = dispatch => ({
+    dispatch,
+  })
+  
+  export default connect(mapStateToProps, mapDispatchToProps) (Profile);
+  
+  

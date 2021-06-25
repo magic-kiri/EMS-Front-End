@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import GridColumn from './column';
 import SectionTop from './sectionTop';
 import getData from '../../methods/getMethod';
+import { Row } from '../../utils/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,11 +51,11 @@ export default function Body(props) {
     <div>
       <SectionTop state={props.state} />
       <div className={classes.root} >
-        <Grid container item className={classes.container} spacing={2}>
+        <Row columns="1fr 1fr 1fr">
           <GridColumn data={{ exams: exams.upComingExam, state: 'upcoming', ... props.state }} />
           <GridColumn data={{ exams: exams.runningExam, state: 'running', ... props.state}} />
           <GridColumn data={{ exams: exams.endedExam, state: 'finished', ... props.state }} />
-        </Grid>
+        </Row>
       </div>
     </div>
   )
