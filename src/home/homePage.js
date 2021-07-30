@@ -5,7 +5,7 @@ import Home from './fieldHome/body';
 import Profile from './profile';
 import './style.css'
 import CreateViva from './createViva';
-import DetailsModal from './modal/detailsModal';
+import DetailsModal from './modal/DetailsModal';
 export default function HomePage(props) {
     
     const [vivaModal, setVivaModal] = useState(false);
