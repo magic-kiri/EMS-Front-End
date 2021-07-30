@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 function StudentView({ dispatch, user }) {
     const classes = useStyles();
     const [permission, setPermission] = useState(false);
+    const [status, setStatus] = useState(false);
 
     let { id } = useParams();
 
@@ -59,8 +60,12 @@ function StudentView({ dispatch, user }) {
     async function loadQuestion() {
         const response = await postData(`/exam/verifyPermission`, { email: localStorage.getItem('email'), id: id })
         if (response.status === 200) {
-            console.log(response.body.permission);
-            setPermission(response.body.permission);
+            const {
+                permission,
+                status,
+            } = response.body;
+            setPermission(permission);
+            setStatus(status);
         }
 
         const res = await postData(`/viva/getVivaHistory`, { id: id })
@@ -85,20 +90,31 @@ function StudentView({ dispatch, user }) {
     }, [])
 
 
-
-
+    let msg = '';
+    switch (status) {
+        case 'noperm':
+            msg = "You don't have permission to enter exam";
+            break;
+        case 'waiting':
+            msg = "You are in the waiting list";
+            break;
+        case 'ended':
+            msg = "Your exam has ended";
+            break;
+        default:
+            break;
+    }
 
     let component;
-    if (!permission) {
+    if (status !== 'running') {
         component = (
             <div className={classes.root}>
                 <div className={classes.container}>
-                    <Typography className={classes.title} color="textPrimary" gutterBottom>You Are In Waiting List</Typography>
+                    <Typography className={classes.title} color="textPrimary" gutterBottom>{msg}</Typography>
                 </div>
             </div>
         )
-    }
-    else {
+    } else {
         component = (
             <div className={classes.root}>
                 <div className={classes.container}>

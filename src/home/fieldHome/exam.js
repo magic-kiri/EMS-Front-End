@@ -41,7 +41,7 @@ const StyledLink = styled(Link)`
 export default function Exam(props) {
     const classes = useStyles();
 
-    const { courseCode, courseTeacher, courseTitle, date, startTime, endTime, _id, email } = props.data.exam;
+    const { courseCode, courseTeacher, courseTitle, date, startTime, endTime, _id, email, status } = props.data.exam;
     const { state, setStudentModal, studentModal } = props.data;
     
     let textDate, btnText;
@@ -55,8 +55,10 @@ export default function Exam(props) {
         textDate = (<div>{`Date: ${date}`} </div>);
     }
 
-    const link = "/"+btnText.toLocaleLowerCase()+"/"+_id;
-      
+    let link = "/"+btnText.toLocaleLowerCase()+"/"+_id;
+    if (btnText === 'Details' && status === "ended") {
+        link = "/details/ended/"+_id
+    }
     
     async function buttonClicked(event) {
         const teacherMode = (localStorage.getItem('teacherMode') == 'true');

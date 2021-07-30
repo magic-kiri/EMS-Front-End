@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
 
 import { Grid } from '@material-ui/core';
@@ -7,6 +8,7 @@ import GridColumn from './column';
 import SectionTop from './sectionTop';
 import getData from '../../methods/getMethod';
 import { Row } from '../../utils/styles';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,28 +22,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Body(props) {
-
+function Body(props) {
+  const { updateDashBoard } = props;
   const [exams, setExams] = useState({ upComingExam: [], runningExam: [], endedExam: [] })
 
   useEffect(async function load() {
     const res = await getData('/exam/currentExam');
     if (res.status === 200)
       setExams(res.body);
-    // const intervalId = setInterval(async() => {
-        
-    //   console.log('refreshing');
-    //   const res = await getData('/exam/currentExam');
-    //   if (res.status === 200) {
-    //     console.log('reload');
-    //     setExams(res.body);
-    //   }
-    // }, 2000)
-    // return () => clearInterval(intervalId)
-    
-    // const refresh = setInterval(async () => {
-    // return clearInterval(refresh)
-  }, []);
+  }, [updateDashBoard]);
 
   const {} = props.state;
 
@@ -60,3 +49,10 @@ export default function Body(props) {
     </div>
   )
 }
+const mapStateToProps = (state) => {
+  return {
+      updateDashBoard: state.app.updateDashBoard,
+  }
+}
+
+export default connect(mapStateToProps, dispatch => ({ dispatch }))(Body)
